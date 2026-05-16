@@ -1,7 +1,6 @@
 import { asc, desc, eq, ilike, sql } from 'drizzle-orm';
 import { db } from '@/packages/plugins/database/primary/client';
 import { meetings } from '@/packages/plugins/database/primary/schemas';
-import { randomId } from '@/packages/factory/utils';
 
 type PaginatedResult<T> = {
   data: T[];
@@ -16,23 +15,26 @@ type PaginatedResult<T> = {
 type ListMeetingsParams = {
   page?: number;
   pageSize?: number;
-  sortBy?: 'title' | 'date' | 'createdAt';
+  sortBy?: 'title' | 'createdAt';
   sortOrder?: 'asc' | 'desc';
   search?: string;
 };
 
 type CreateMeetingParams = {
   title: string;
-  date: Date;
-  duration: number;
-  notes?: string;
 };
 
-type UpdateMeetingParams = Partial<CreateMeetingParams>;
+type UpdateMeetingParams = {
+  title?: string;
+  transcriptOutput?: unknown;
+  summary?: string;
+  actionItems?: unknown;
+  status?: 'recording' | 'processing' | 'ready' | 'failed';
+  errorMessage?: string;
+};
 
 const sortColumns = {
   title: meetings.title,
-  date: meetings.date,
   createdAt: meetings.createdAt
 } as const;
 
@@ -42,7 +44,7 @@ export async function listMeetings(
   const {
     page = 1,
     pageSize = 10,
-    sortBy = 'date',
+    sortBy = 'createdAt',
     sortOrder = 'desc',
     search
   } = params;
@@ -61,10 +63,7 @@ export async function listMeetings(
       .orderBy(orderFn(sortColumn))
       .limit(pageSize)
       .offset(offset),
-    db
-      .select({ count: sql<number>`count(*)` })
-      .from(meetings)
-      .where(where)
+    db.select({ count: sql<number>`count(*)` }).from(meetings).where(where)
   ]);
 
   const total = Number(countResult[0]?.count ?? 0);
@@ -81,26 +80,19 @@ export async function listMeetings(
 }
 
 export async function getMeetingById(id: string) {
-  const [meeting] = await db
-    .select()
-    .from(meetings)
-    .where(eq(meetings.id, id));
+  const [meeting] = await db.select().from(meetings).where(eq(meetings.id, id));
   return meeting ?? null;
 }
 
 export async function createMeeting(params: CreateMeetingParams) {
-  const id = randomId();
-  const [meeting] = await db
-    .insert(meetings)
-    .values({ id, ...params })
-    .returning();
+  const [meeting] = await db.insert(meetings).values(params).returning();
   return meeting;
 }
 
 export async function updateMeeting(id: string, params: UpdateMeetingParams) {
   const [meeting] = await db
     .update(meetings)
-    .set({ ...params, updatedAt: new Date() })
+    .set(params)
     .where(eq(meetings.id, id))
     .returning();
   return meeting ?? null;

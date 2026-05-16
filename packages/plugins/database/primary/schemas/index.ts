@@ -1,1 +1,1 @@
-export { meetings } from './meetings';
+export { meetingStatusEnum, meetings } from './meetings';

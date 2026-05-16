@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  randomId
-} from '../utils';
+import { randomId } from '../utils';
 
 describe('randomId', () => {
   it('should return ~24 chars by default', () => {
