@@ -1,0 +1,1099 @@
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-cmni-gold: #D4A853;
+  --color-cmni-gold-hover: #B8903F;
+  --color-cmni-gold-light: #E8C97A;
+  --color-cmni-slate: #2E314C;
+  --color-cmni-dark: #232323;
+  --color-cmni-darker: #1A1A1A;
+  --color-cmni-light: #FBFBFA;
+  --color-cmni-light-secondary: #F5F5F3;
+  --color-cmni-surface: #1E2023;
+  --color-cmni-surface-elevated: #282B2F;
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --spacing-section-y-desktop: 120px;
+  --spacing-section-y-mobile: 80px;
+  --spacing-card-gap: 32px;
+  --spacing-container: 1280px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-heading: var(--font-heading);
+  --color-blog-accent: var(--blog-accent);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-muted-foreground: var(--sidebar-muted-foreground);
+  --color-sidebar-icon-fg: var(--sidebar-icon-fg);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-hairline: var(--hairline);
+  --color-muted-soft: var(--muted-soft);
+
+  /* A06 status-pill tones (light/dark same except where overridden in .dark) */
+  --color-status-active: var(--status-active);
+  --color-status-trial: var(--status-trial);
+  --color-status-past-due: var(--status-past-due);
+  --color-status-pending: var(--status-pending);
+
+  /* A03 radius scale — Paper-defined px values; 2xl/3xl/4xl alias to xl
+     so existing consumers keep rendering without churn. */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-base: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;
+  --radius-2xl: 18px;
+  --radius-3xl: 18px;
+  --radius-4xl: 18px;
+
+  /* A03 elevation tiers — hairline / drop / overlay / modal */
+  --shadow-hairline: inset 0 0 0 1px var(--border);
+  --shadow-drop-sm: 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.08);
+  --shadow-modal: 0 20px 48px rgb(0 0 0 / 0.16);
+
+  /* A09 Dropdown — popover panel composite shadow (light/dark resolved via :root / .dark) */
+  --shadow-popover: var(--popover-shadow);
+
+  /* A12 Floating — popover.tsx + command.tsx (cmd-K) shared drop shadow.
+     Same in both modes per Paper artboard. */
+  --shadow-floating: 0 8px 24px rgb(31 29 27 / 0.08), 0 1px 2px rgb(31 29 27 / 0.04);
+
+  /* A12 Floating — tertiary text/icon color (close glyph, kbd labels, group headings) */
+  --color-text-tertiary: var(--text-tertiary);
+
+  /* A12 Floating — soft divider (command input/list separator). Lighter than --border in light mode. */
+  --color-divider-soft: var(--divider-soft);
+
+  /* A05 input heights — Paper-rendered values (sm 30, md 34, lg 44) */
+  --size-input-sm: 1.875rem;
+  --size-input-md: 2.125rem;
+  --size-input-lg: 2.75rem;
+
+  /* A05 Input — color aliases for arbitrary-value access */
+  --color-input-bg: var(--input-bg);
+  --color-input-bg-readonly: var(--input-bg-readonly);
+  --color-input-bg-disabled: var(--input-bg-disabled);
+  --color-input-border-base: var(--input-border-base);
+  --color-input-border-hover: var(--input-border-hover);
+  --color-input-border-focus: var(--input-border-focus);
+  --color-input-border-error: var(--input-border-error);
+  --color-input-text: var(--input-text);
+  --color-input-text-disabled: var(--input-text-disabled);
+  --color-input-helper-fg: var(--input-helper-fg);
+  --color-input-helper-error-fg: var(--input-helper-error-fg);
+  --color-input-icon-fg: var(--input-icon-fg);
+
+  /* A05.2 Specialized inputs — extra tokens (stepper / static icon / popover) */
+  --color-input-stepper-icon-fg: var(--input-stepper-icon-fg);
+  --color-input-icon-static-fg: var(--input-icon-static-fg);
+  --color-input-popover-item-active-bg: var(--input-popover-item-active-bg);
+  --shadow-input-popover: 0 0.25rem 0.75rem rgb(31 29 27 / 0.06);
+
+  /* A05.6 Composite — textarea-specific surface (dark diverges from --input-bg) */
+  --color-textarea-bg: var(--textarea-bg);
+  --color-textarea-border-base: var(--textarea-border-base);
+
+  /* A05.8 Uploads — drop-zone surface (light/dark resolved via :root / .dark) */
+  --color-upload-dropzone-bg: var(--upload-dropzone-bg);
+  --color-upload-dropzone-border: var(--upload-dropzone-border);
+
+  /* A05.4 Selection — switch / checkbox / radio (token aliases) */
+  --color-switch-track-on: var(--switch-track-on);
+  --color-switch-track-off: var(--switch-track-off);
+  --color-switch-thumb-on: var(--switch-thumb-on);
+  --color-switch-thumb-off: var(--switch-thumb-off);
+  --color-checkbox-bg: var(--checkbox-bg);
+  --color-checkbox-border: var(--checkbox-border);
+  --color-checkbox-checked-bg: var(--checkbox-checked-bg);
+  --color-checkbox-checked-fg: var(--checkbox-checked-fg);
+  --color-checkbox-error-border: var(--checkbox-error-border);
+  --color-radio-bg: var(--radio-bg);
+  --color-radio-border: var(--radio-border);
+  --color-radio-selected-border: var(--radio-selected-border);
+  --color-radio-dot: var(--radio-dot);
+  --color-radio-card-bg: var(--radio-card-bg);
+  --color-radio-card-border: var(--radio-card-border);
+  --color-radio-card-selected-border: var(--radio-card-selected-border);
+  --color-radio-card-ring: var(--radio-card-ring);
+  --shadow-switch-thumb: 0 0.0625rem 0.125rem rgb(31 29 27 / 0.12);
+
+  /* A04 Button — token aliases for arbitrary-value access */
+  --color-btn-primary-bg: var(--btn-primary-bg);
+  --color-btn-primary-bg-hover: var(--btn-primary-bg-hover);
+  --color-btn-primary-bg-active: var(--btn-primary-bg-active);
+  --color-btn-primary-fg: var(--btn-primary-fg);
+  --color-btn-default-light-bg: var(--btn-default-light-bg);
+  --color-btn-default-light-bg-hover: var(--btn-default-light-bg-hover);
+  --color-btn-default-light-bg-active: var(--btn-default-light-bg-active);
+  --color-btn-default-light-fg: var(--btn-default-light-fg);
+  --color-btn-secondary-bg: var(--btn-secondary-bg);
+  --color-btn-secondary-bg-hover: var(--btn-secondary-bg-hover);
+  --color-btn-secondary-bg-active: var(--btn-secondary-bg-active);
+  --color-btn-secondary-fg: var(--btn-secondary-fg);
+  --color-btn-outline-border: var(--btn-outline-border);
+  --color-btn-outline-bg-hover: var(--btn-outline-bg-hover);
+  --color-btn-outline-bg-active: var(--btn-outline-bg-active);
+  --color-btn-outline-fg: var(--btn-outline-fg);
+  --color-btn-ghost-bg-hover: var(--btn-ghost-bg-hover);
+  --color-btn-ghost-bg-active: var(--btn-ghost-bg-active);
+  --color-btn-ghost-fg: var(--btn-ghost-fg);
+  --color-btn-destructive-bg: var(--btn-destructive-bg);
+  --color-btn-destructive-bg-hover: var(--btn-destructive-bg-hover);
+  --color-btn-destructive-bg-active: var(--btn-destructive-bg-active);
+  --color-btn-destructive-fg: var(--btn-destructive-fg);
+  --color-btn-destructive-light-bg: var(--btn-destructive-light-bg);
+  --color-btn-destructive-light-bg-hover: var(--btn-destructive-light-bg-hover);
+  --color-btn-destructive-light-bg-active: var(--btn-destructive-light-bg-active);
+  --color-btn-destructive-light-fg: var(--btn-destructive-light-fg);
+  --color-btn-link-fg: var(--btn-link-fg);
+  --color-btn-focus-halo: var(--btn-focus-halo);
+  --color-btn-kbd-bg: var(--btn-kbd-bg);
+  --color-btn-kbd-border: var(--btn-kbd-border);
+  --color-btn-kbd-fg: var(--btn-kbd-fg);
+  --shadow-btn-primary: var(--btn-primary-shadow);
+
+  /* A06 Badge — token aliases for arbitrary-value access */
+  --color-badge-default-bg: var(--badge-default-bg);
+  --color-badge-default-fg: var(--badge-default-fg);
+  --color-badge-secondary-bg: var(--badge-secondary-bg);
+  --color-badge-secondary-fg: var(--badge-secondary-fg);
+  --color-badge-destructive-bg: var(--badge-destructive-bg);
+  --color-badge-destructive-fg: var(--badge-destructive-fg);
+  --color-badge-success-bg: var(--badge-success-bg);
+  --color-badge-success-fg: var(--badge-success-fg);
+  --color-badge-success-dot: var(--badge-success-dot);
+  --color-badge-warning-bg: var(--badge-warning-bg);
+  --color-badge-warning-fg: var(--badge-warning-fg);
+  --color-badge-warning-dot: var(--badge-warning-dot);
+  --color-badge-info-bg: var(--badge-info-bg);
+  --color-badge-info-fg: var(--badge-info-fg);
+  --color-badge-info-dot: var(--badge-info-dot);
+  --color-badge-outline-border: var(--badge-outline-border);
+  --color-badge-outline-fg: var(--badge-outline-fg);
+  --color-badge-opposite-bg: var(--badge-opposite-bg);
+  --color-badge-opposite-fg: var(--badge-opposite-fg);
+  --color-badge-violet-bg: var(--badge-violet-bg);
+  --color-badge-violet-fg: var(--badge-violet-fg);
+  --color-badge-violet-dot: var(--badge-violet-dot);
+  --color-badge-emerald-bg: var(--badge-emerald-bg);
+  --color-badge-emerald-fg: var(--badge-emerald-fg);
+  --color-badge-emerald-dot: var(--badge-emerald-dot);
+  --color-badge-sky-bg: var(--badge-sky-bg);
+  --color-badge-sky-fg: var(--badge-sky-fg);
+  --color-badge-sky-dot: var(--badge-sky-dot);
+  --color-badge-orange-bg: var(--badge-orange-bg);
+  --color-badge-orange-fg: var(--badge-orange-fg);
+  --color-badge-orange-dot: var(--badge-orange-dot);
+  --color-badge-pill-success-bg: var(--badge-pill-success-bg);
+  --color-badge-pill-success-fg: var(--badge-pill-success-fg);
+  --color-badge-pill-success-dot: var(--badge-pill-success-dot);
+  --color-badge-pill-warning-bg: var(--badge-pill-warning-bg);
+  --color-badge-pill-warning-fg: var(--badge-pill-warning-fg);
+  --color-badge-pill-warning-dot: var(--badge-pill-warning-dot);
+  --color-badge-pill-destructive-bg: var(--badge-pill-destructive-bg);
+  --color-badge-pill-destructive-fg: var(--badge-pill-destructive-fg);
+  --color-badge-pill-destructive-dot: var(--badge-pill-destructive-dot);
+  --color-badge-pill-neutral-bg: var(--badge-pill-neutral-bg);
+  --color-badge-pill-neutral-fg: var(--badge-pill-neutral-fg);
+  --color-badge-pill-neutral-dot: var(--badge-pill-neutral-dot);
+  --color-badge-pill-chip-bg: var(--badge-pill-chip-bg);
+  --color-badge-pill-chip-fg: var(--badge-pill-chip-fg);
+
+  /* A07 Avatar — token aliases for arbitrary-value access */
+  --color-avatar-bg: var(--avatar-bg);
+  --color-avatar-fg: var(--avatar-fg);
+  --color-avatar-skeleton-bg: var(--avatar-skeleton-bg);
+  --color-avatar-skeleton-border: var(--avatar-skeleton-border);
+  --color-avatar-skeleton-fg: var(--avatar-skeleton-fg);
+  --color-avatar-stack-ring: var(--avatar-stack-ring);
+  --color-avatar-status-online: var(--avatar-status-online);
+
+  /* A10 Tabs — token aliases for arbitrary-value access */
+  --color-tabs-list-bg: var(--tabs-list-bg);
+  --color-tabs-trigger-active-bg: var(--tabs-trigger-active-bg);
+  --color-tabs-trigger-active-fg: var(--tabs-trigger-active-fg);
+  --color-tabs-trigger-fg: var(--tabs-trigger-fg);
+  --color-tabs-line-border: var(--tabs-line-border);
+  --color-tabs-line-indicator: var(--tabs-line-indicator);
+  --color-tabs-coming-soon-fg: var(--tabs-coming-soon-fg);
+  --color-tabs-count-warning-fg: var(--tabs-count-warning-fg);
+  --shadow-tabs-trigger-active: 0 1px 2px #1F1D1B0F;
+
+  /* A13 Card — token aliases for arbitrary-value access */
+  --color-card-border: var(--card-border);
+  --color-card-skeleton-strong: var(--card-skeleton-strong);
+  --color-card-skeleton-soft: var(--card-skeleton-soft);
+  --shadow-card: 0 1px 2px rgb(31 29 27 / 0.04);
+
+  /* A20 Skeleton — token aliases for arbitrary-value access */
+  --color-skeleton-strong: var(--skeleton-strong);
+  --color-skeleton-soft: var(--skeleton-soft);
+
+  /* A14 Alert — per-variant bg / border / icon / title / desc / action surfaces */
+  --color-alert-default-bg: var(--alert-default-bg);
+  --color-alert-default-border: var(--alert-default-border);
+  --color-alert-default-icon-fg: var(--alert-default-icon-fg);
+  --color-alert-default-title-fg: var(--alert-default-title-fg);
+  --color-alert-default-desc-fg: var(--alert-default-desc-fg);
+  --color-alert-default-action-fg: var(--alert-default-action-fg);
+  --color-alert-info-bg: var(--alert-info-bg);
+  --color-alert-info-border: var(--alert-info-border);
+  --color-alert-info-icon-fg: var(--alert-info-icon-fg);
+  --color-alert-info-title-fg: var(--alert-info-title-fg);
+  --color-alert-info-desc-fg: var(--alert-info-desc-fg);
+  --color-alert-success-bg: var(--alert-success-bg);
+  --color-alert-success-border: var(--alert-success-border);
+  --color-alert-success-icon-fg: var(--alert-success-icon-fg);
+  --color-alert-success-title-fg: var(--alert-success-title-fg);
+  --color-alert-success-desc-fg: var(--alert-success-desc-fg);
+  --color-alert-warning-bg: var(--alert-warning-bg);
+  --color-alert-warning-border: var(--alert-warning-border);
+  --color-alert-warning-icon-fg: var(--alert-warning-icon-fg);
+  --color-alert-warning-title-fg: var(--alert-warning-title-fg);
+  --color-alert-warning-desc-fg: var(--alert-warning-desc-fg);
+  --color-alert-warning-action-bg: var(--alert-warning-action-bg);
+  --color-alert-warning-action-fg: var(--alert-warning-action-fg);
+  --color-alert-destructive-bg: var(--alert-destructive-bg);
+  --color-alert-destructive-border: var(--alert-destructive-border);
+  --color-alert-destructive-icon-fg: var(--alert-destructive-icon-fg);
+  --color-alert-destructive-title-fg: var(--alert-destructive-title-fg);
+  --color-alert-destructive-desc-fg: var(--alert-destructive-desc-fg);
+  --color-alert-destructive-action-bg: var(--alert-destructive-action-bg);
+  --color-alert-destructive-action-fg: var(--alert-destructive-action-fg);
+
+  /* A17 Dialog — overlay + panel shadow (light/dark resolved via :root / .dark) */
+  --color-dialog-overlay: var(--dialog-overlay);
+  --shadow-dialog: var(--dialog-shadow);
+
+  /* A18 Sheet — width + overlay + leftward shadow + sticky-footer translucent surface */
+  --width-sheet: var(--sheet-width);
+  --color-sheet-overlay: var(--sheet-overlay);
+  --shadow-sheet: var(--sheet-shadow);
+  --color-sheet-footer-bg: var(--sheet-footer-bg);
+
+  /* A21 Toaster — composite shadow (light/dark resolved via :root / .dark) +
+     intent ring colors (static across modes) */
+  --shadow-toast: var(--toast-shadow);
+  --color-toast-icon-success-bg: var(--toast-icon-success-bg);
+  --color-toast-icon-error-bg: var(--toast-icon-error-bg);
+  --color-toast-icon-info-bg: var(--toast-icon-info-bg);
+  --color-toast-icon-fg: var(--toast-icon-fg);
+}
+
+:root {
+  /* A02 Surface (Paper-canonical: cool neutrals from rendered JSX) */
+  --background: #FFFFFF;
+  --card: #FFFFFF;
+  --popover: #FFFFFF;
+  --muted: #F8F9FA;
+  --secondary: #F2F3F5;
+  --accent: #F2F3F5;
+  --muted-soft: #ECEEF0;
+
+  /* A02 Ink */
+  --foreground: #18191B;
+  --card-foreground: #18191B;
+  --popover-foreground: #18191B;
+  --primary: #18191B;
+  --primary-foreground: #FBFAF7;
+  --secondary-foreground: #18191B;
+  --accent-foreground: #18191B;
+  --muted-foreground: #6B7280;
+
+  /* A02 Hairline */
+  --border: #E1E4E8;
+  --input: #E1E4E8;
+  --hairline: #B5BAC2;
+  --ring: #D4A853;
+
+  /* A09 Dropdown panel shadow */
+  --popover-shadow: 0 4px 12px rgb(31 29 27 / 0.08), 0 1px 2px rgb(31 29 27 / 0.04);
+
+  /* A12 Floating */
+  --text-tertiary: #8A847C;
+  --divider-soft: #F2F3F5;
+
+  /* A02 Semantic */
+  --destructive: #C24E3A;
+  --destructive-foreground: #FFFFFF;
+  --warning: #C7943A;
+  --warning-foreground: #FFFFFF;
+  --info: #3D6CC2;
+  --info-foreground: #FFFFFF;
+  --success: #3A8E5C;
+  --success-foreground: #FFFFFF;
+
+  /* A06 Status pills */
+  --status-active: #3A8E5C;
+  --status-trial: #D4A853;
+  --status-past-due: #B85450;
+  --status-pending: #6E6862;
+
+  /* Charts (out of A02 scope — kept neutralized blues for analytics widgets) */
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+
+  --blog-accent: oklch(0.637 0.237 25);
+
+  /* A03 base radius — atoms compose --radius-{size} from this */
+  --radius: 0.625rem;
+
+  /* A25 Sidebar — light palette aligned to Paper PB6-0 (cool grays) */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #18191B;
+  --sidebar-primary: #18191B;
+  --sidebar-primary-foreground: #F8F9FA;
+  --sidebar-accent: #F2F3F5;
+  --sidebar-accent-foreground: #18191B;
+  --sidebar-border: #E1E4E8;
+  --sidebar-ring: #D4A853;
+  /* A25 Sidebar — supporting tones */
+  --sidebar-muted: #F8F9FA;
+  --sidebar-muted-foreground: #6B7280;
+  --sidebar-icon-fg: #8A847C;
+
+  /* A04 Button — Primary / default */
+  --btn-primary-bg: #18191B;
+  --btn-primary-bg-hover: #26282C;
+  --btn-primary-bg-active: #14130F;
+  --btn-primary-fg: #F8F9FA;
+  --btn-primary-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 1px 2px rgb(31 29 27 / 0.18);
+
+  /* A04 Button — Default-light */
+  --btn-default-light-bg: #F2F3F5;
+  --btn-default-light-bg-hover: #E8EAED;
+  --btn-default-light-bg-active: #DEE1E5;
+  --btn-default-light-fg: #18191B;
+
+  /* A04 Button — Secondary */
+  --btn-secondary-bg: #E8EAED;
+  --btn-secondary-bg-hover: #DEE1E5;
+  --btn-secondary-bg-active: #D4D8DC;
+  --btn-secondary-fg: #18191B;
+
+  /* A04 Button — Outline */
+  --btn-outline-border: #E1E4E8;
+  --btn-outline-bg-hover: #F8F9FA;
+  --btn-outline-bg-active: #F2F3F5;
+  --btn-outline-fg: #18191B;
+
+  /* A04 Button — Ghost */
+  --btn-ghost-bg-hover: #F2F3F5;
+  --btn-ghost-bg-active: #E8EAED;
+  --btn-ghost-fg: #18191B;
+
+  /* A04 Button — Destructive (filled) */
+  --btn-destructive-bg: #C24E3A;
+  --btn-destructive-bg-hover: #B0432F;
+  --btn-destructive-bg-active: #9C3A28;
+  --btn-destructive-fg: #F8F9FA;
+
+  /* A04 Button — Destructive-light (12% tint of destructive) */
+  --btn-destructive-light-bg: rgb(194 78 58 / 0.12);
+  --btn-destructive-light-bg-hover: rgb(194 78 58 / 0.18);
+  --btn-destructive-light-bg-active: rgb(194 78 58 / 0.24);
+  --btn-destructive-light-fg: #C24E3A;
+
+  /* A04 Button — Link */
+  --btn-link-fg: #18191B;
+
+  /* A04 Focus halo (gold @ 32% alpha) */
+  --btn-focus-halo: rgb(212 168 83 / 0.32);
+
+  /* A04 Kbd badge */
+  --btn-kbd-bg: #F2F3F5;
+  --btn-kbd-border: #E1E4E8;
+  --btn-kbd-fg: #6B7280;
+
+  /* A08 Tooltip — surface inverts via .dark override; shortcut chip uses 12% mix of --background (auto-inverts) */
+  --tooltip-bg: #18191B;
+  --tooltip-fg: #F8F9FA;
+  --tooltip-shortcut-bg: color-mix(in srgb, var(--background) 12%, transparent);
+
+  /* A05 Input — surface */
+  --input-bg: #FFFFFF;
+  --input-bg-readonly: #F8F9FA;
+  --input-bg-disabled: #F2F3F5;
+
+  /* A05 Input — border (input-border-base avoids collision with --input/--border) */
+  --input-border-base: #E1E4E8;
+  --input-border-hover: #B5BAC2;
+  --input-border-focus: #18191B;
+  --input-border-error: #C24E3A;
+
+  /* A05 Input — text */
+  --input-text: #18191B;
+  --input-text-disabled: #B5BAC2;
+
+  /* A05 Input — helper */
+  --input-helper-fg: #6B7280;
+  --input-helper-error-fg: #8A3A37;
+
+  /* A05 Input — focus halo (3px @ 10% foreground) */
+  --input-focus-ring: rgb(24 25 27 / 0.10);
+
+  /* A05 Input — after-slot icon stroke */
+  --input-icon-fg: #8A847C;
+
+  /* A05.2 Specialized inputs — stepper icon (static both modes) */
+  --input-stepper-icon-fg: #6B7280;
+  /* A05.2 Specialized inputs — chevron / pencil icon (static both modes) */
+  --input-icon-static-fg: #8A847C;
+  /* A05.2 Specialized inputs — autocomplete active item bg */
+  --input-popover-item-active-bg: #F2F3F5;
+
+  /* A05.6 Composite — textarea-specific surface */
+  --textarea-bg: #FFFFFF;
+  --textarea-border-base: #E1E4E8;
+
+  /* A05.8 Uploads — drop-zone surface */
+  --upload-dropzone-bg: #F8F9FA;
+  --upload-dropzone-border: #B5BAC2;
+
+  /* A05.4 Selection — Switch */
+  --switch-track-on: #18191B;
+  --switch-track-off: #E1E4E8;
+  --switch-thumb-on: #F8F9FA;
+  --switch-thumb-off: #FFFFFF;
+
+  /* A05.4 Selection — Checkbox (static across modes for bg/border/error) */
+  --checkbox-bg: #FFFFFF;
+  --checkbox-border: #B5BAC2;
+  --checkbox-checked-bg: #18191B;
+  --checkbox-checked-fg: #FBFAF7;
+  --checkbox-error-border: #C24E3A;
+
+  /* A05.4 Selection — Radio (static across modes for bg/border) */
+  --radio-bg: #FFFFFF;
+  --radio-border: #B5BAC2;
+  --radio-selected-border: #18191B;
+  --radio-dot: #18191B;
+
+  /* A05.5 Selection cards — boxed radio variant */
+  --radio-card-bg: #FFFFFF;
+  --radio-card-border: #E1E4E8;
+  --radio-card-selected-border: #18191B;
+  --radio-card-ring: #B5BAC2;
+
+  /* A06 Badge — inline tones (12 variants) */
+  --badge-default-bg: #18191B;
+  --badge-default-fg: #F8F9FA;
+  --badge-secondary-bg: #E8EAED;
+  --badge-secondary-fg: #18191B;
+  --badge-destructive-bg: #C24E3A;
+  --badge-destructive-fg: #F8F9FA;
+  --badge-success-bg: #3A8E5C2E;
+  --badge-success-fg: #2A6A45;
+  --badge-success-dot: #3A8E5C;
+  --badge-warning-bg: #C8A24B2E;
+  --badge-warning-fg: #8A6A1F;
+  --badge-warning-dot: #C8A24B;
+  --badge-info-bg: #2F6FE82E;
+  --badge-info-fg: #1F4FA8;
+  --badge-info-dot: #2F6FE8;
+  --badge-outline-border: #E1E4E8;
+  --badge-outline-fg: #18191B;
+  --badge-opposite-bg: #F8F9FA;
+  --badge-opposite-fg: #6B7280;
+  --badge-violet-bg: #7C50B329;
+  --badge-violet-fg: #5C3A88;
+  --badge-violet-dot: #7C50B3;
+  --badge-emerald-bg: #3A8E5C2E;
+  --badge-emerald-fg: #1F6E45;
+  --badge-emerald-dot: #3A8E5C;
+  --badge-sky-bg: #3D6CC22E;
+  --badge-sky-fg: #2C4E8A;
+  --badge-sky-dot: #3D6CC2;
+  --badge-orange-bg: #D48C3533;
+  --badge-orange-fg: #8A4A2E;
+  --badge-orange-dot: #D48C35;
+
+  /* A06 Badge — pill tones (withPill overrides) */
+  --badge-pill-success-bg: #3A8E5C2E;
+  --badge-pill-success-fg: #2A6A45;
+  --badge-pill-success-dot: #3A8E5C;
+  --badge-pill-warning-bg: #D4A85333;
+  --badge-pill-warning-fg: #8A6A2E;
+  --badge-pill-warning-dot: #D4A853;
+  --badge-pill-destructive-bg: #B854502E;
+  --badge-pill-destructive-fg: #8A3A37;
+  --badge-pill-destructive-dot: #B85450;
+  --badge-pill-neutral-bg: #23232314;
+  --badge-pill-neutral-fg: #6B7280;
+  --badge-pill-neutral-dot: #6B7280;
+  --badge-pill-chip-bg: #2323230F;
+  --badge-pill-chip-fg: #18191B;
+
+  /* A07 Avatar — non-inverting body / inverting skeleton */
+  --avatar-bg: #18191B;
+  --avatar-fg: #F8F9FA;
+  --avatar-skeleton-bg: #E8EAED;
+  --avatar-skeleton-border: #B5BAC2;
+  --avatar-skeleton-fg: #6B7280;
+  --avatar-stack-ring: #18191B;
+  --avatar-status-online: #3A8E5C;
+  /* offline / away / busy reuse semantic tokens directly:
+     offline = var(--muted-foreground), away = var(--color-cmni-gold), busy = var(--destructive) */
+
+  /* A10 Tabs — list / trigger / line / count badge surfaces */
+  --tabs-list-bg: #F2F3F5;
+  --tabs-trigger-active-bg: #FFFFFF;
+  --tabs-trigger-active-fg: #18191B;
+  --tabs-trigger-fg: #6B7280;
+  --tabs-line-border: #E1E4E8;
+  --tabs-line-indicator: #18191B;
+  --tabs-coming-soon-fg: #6B7280;
+  --tabs-count-warning-fg: #8A6A2E;
+
+  /* A20 Skeleton */
+  --skeleton-strong: #E8EAED;
+  --skeleton-soft: #ECEEF0;
+
+  /* A13 Card */
+  --card-border: #E1E4E8;
+  --card-skeleton-strong: var(--skeleton-strong);
+  --card-skeleton-soft: var(--skeleton-soft);
+
+  /* A14 Alert — per-variant surfaces (light) */
+  --alert-default-bg: #F8F9FA;
+  --alert-default-border: #E1E4E8;
+  --alert-default-icon-fg: #6E6862;
+  --alert-default-title-fg: #18191B;
+  --alert-default-desc-fg: #6B7280;
+  --alert-default-action-fg: #18191B;
+
+  --alert-info-bg: #3D6CC21A;
+  --alert-info-border: #3D6CC23D;
+  --alert-info-icon-fg: #3D6CC2;
+  --alert-info-title-fg: #2C4E8A;
+  --alert-info-desc-fg: #4A6280;
+
+  --alert-success-bg: #3A8E5C1A;
+  --alert-success-border: #3A8E5C47;
+  --alert-success-icon-fg: #3A8E5C;
+  --alert-success-title-fg: #2A6A45;
+  --alert-success-desc-fg: #356A4A;
+
+  --alert-warning-bg: #C7943A1F;
+  --alert-warning-border: #C7943A4D;
+  --alert-warning-icon-fg: #C7943A;
+  --alert-warning-title-fg: #8A6325;
+  --alert-warning-desc-fg: #6E5530;
+  --alert-warning-action-bg: #18191B;
+  --alert-warning-action-fg: #F8F9FA;
+
+  --alert-destructive-bg: #C24E3A1A;
+  --alert-destructive-border: #C24E3A47;
+  --alert-destructive-icon-fg: #C24E3A;
+  --alert-destructive-title-fg: #8A3A37;
+  --alert-destructive-desc-fg: #7A3D38;
+  --alert-destructive-action-bg: #C24E3A;
+  --alert-destructive-action-fg: #F8F9FA;
+
+  /* A17 Dialog */
+  --dialog-overlay: rgb(168 162 155 / 0.25);
+  --dialog-shadow: 0 1.5rem 3rem -0.75rem rgb(31 29 27 / 0.32), 0 0.5rem 1rem rgb(31 29 27 / 0.10);
+
+  /* A18 Sheet */
+  --sheet-width: 27.5rem;
+  --sheet-overlay: rgb(24 25 27 / 0.55);
+  --sheet-shadow: -1.5rem 0 3rem -0.75rem rgb(31 29 27 / 0.18);
+  --sheet-footer-bg: rgb(255 255 255 / 0.95);
+
+  /* A21 Toaster — Paper-rendered composite shadow + intent ring (static across modes) */
+  --toast-shadow: 0 0.75rem 1.75rem rgb(31 29 27 / 0.10), 0 0.0625rem 0.125rem rgb(31 29 27 / 0.04);
+  --toast-icon-success-bg: #3A8E5C;
+  --toast-icon-error-bg: #C24E3A;
+  --toast-icon-info-bg: #2F6FE8;
+  --toast-icon-fg: #FFFFFF;
+}
+
+.dark {
+  /* A02 Surface */
+  --background: #18191B;
+  --card: #1F2023;
+  --popover: #1B1D20;
+  --muted: #2A2B2E;
+  --secondary: #2A2B2E;
+  --accent: #26282C;
+  --muted-soft: #232427;
+
+  /* A02 Ink */
+  --foreground: #F5F2ED;
+  --card-foreground: #F5F2ED;
+  --popover-foreground: #F8F9FA;
+  --primary: #D8D6D2;
+  --primary-foreground: #1F1D1B;
+  --secondary-foreground: #F5F2ED;
+  --accent-foreground: #F5F2ED;
+  --muted-foreground: #A8A29B;
+
+  /* A02 Hairline */
+  --border: #2C2F33;
+  --input: rgb(255 255 255 / 0.15);
+  --hairline: rgb(255 255 255 / 0.20);
+  --ring: #D4A853;
+
+  /* A09 Dropdown panel shadow (heavier under dark) */
+  --popover-shadow: 0 8px 24px rgb(0 0 0 / 0.40), 0 1px 2px rgb(0 0 0 / 0.20);
+
+  /* A12 Floating */
+  --text-tertiary: #A8A29B;
+  --divider-soft: #2C2F33;
+
+  /* A02 Semantic */
+  --destructive: #E07A66;
+  --destructive-foreground: #1F1D1B;
+  --warning: #DDB041;
+  --warning-foreground: #1F1D1B;
+  --info: #4862A6;
+  --info-foreground: #F5F2ED;
+  --success: #4FC78A;
+  --success-foreground: #1F1D1B;
+
+  /* A06 Status pills (light/dark parity) */
+  --status-active: #3A8E5C;
+  --status-trial: #D4A853;
+  --status-past-due: #B85450;
+  --status-pending: #6E6862;
+
+  /* Charts (kept) */
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+
+  --blog-accent: oklch(0.704 0.191 22.216);
+
+  /* Sidebar (A10) inherits dark surface */
+  --sidebar: #232323;
+  --sidebar-foreground: #F5F2ED;
+  --sidebar-primary: #F5F2ED;
+  --sidebar-primary-foreground: #1F1D1B;
+  --sidebar-accent: #2E2E2E;
+  --sidebar-accent-foreground: #F5F2ED;
+  --sidebar-border: rgb(255 255 255 / 0.10);
+  --sidebar-ring: #D4A853;
+  --sidebar-muted: #1B1D20;
+  --sidebar-muted-foreground: #A8A29B;
+  --sidebar-icon-fg: #A8A29B;
+
+  /* A04 Button — Primary / default (inverts in dark) */
+  --btn-primary-bg: #F8F9FA;
+  --btn-primary-bg-hover: #E8E5DF;
+  --btn-primary-bg-active: #E0DCD2;
+  --btn-primary-fg: #18191B;
+  --btn-primary-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 1px 2px rgb(31 29 27 / 0.18);
+
+  /* A04 Button — Default-light */
+  --btn-default-light-bg: #26282C;
+  --btn-default-light-bg-hover: #2E3036;
+  --btn-default-light-bg-active: #36383E;
+  --btn-default-light-fg: #F8F9FA;
+
+  /* A04 Button — Secondary */
+  --btn-secondary-bg: #2E2B27;
+  --btn-secondary-bg-hover: #36322E;
+  --btn-secondary-bg-active: #3E3A36;
+  --btn-secondary-fg: #F8F9FA;
+
+  /* A04 Button — Outline */
+  --btn-outline-border: #26282C;
+  --btn-outline-bg-hover: #1F2023;
+  --btn-outline-bg-active: #26282C;
+  --btn-outline-fg: #F8F9FA;
+
+  /* A04 Button — Ghost */
+  --btn-ghost-bg-hover: #26282C;
+  --btn-ghost-bg-active: #2E3036;
+  --btn-ghost-fg: #F8F9FA;
+
+  /* A04 Button — Destructive (filled) */
+  --btn-destructive-bg: #E07A66;
+  --btn-destructive-bg-hover: #CC6E5C;
+  --btn-destructive-bg-active: #B86250;
+  --btn-destructive-fg: #F8F9FA;
+
+  /* A04 Button — Destructive-light (15% tint in dark) */
+  --btn-destructive-light-bg: rgb(224 122 102 / 0.15);
+  --btn-destructive-light-bg-hover: rgb(224 122 102 / 0.22);
+  --btn-destructive-light-bg-active: rgb(224 122 102 / 0.30);
+  --btn-destructive-light-fg: #E07A66;
+
+  /* A04 Button — Link */
+  --btn-link-fg: #F8F9FA;
+
+  /* A04 Focus halo (gold @ 32% alpha — same in dark) */
+  --btn-focus-halo: rgb(212 168 83 / 0.32);
+
+  /* A04 Kbd badge */
+  --btn-kbd-bg: #26282C;
+  --btn-kbd-border: #36322E;
+  --btn-kbd-fg: #F8F9FA;
+
+  /* A05 Input — dark overrides (Paper state-row default = #1B1D20 / #2C2F33) */
+  --input-bg: #1B1D20;
+  --input-bg-readonly: #1F2125;
+  --input-bg-disabled: #26282C;
+  --input-border-base: #2C2F33;
+  --input-border-hover: #4A4D52;
+  --input-border-focus: #F8F9FA;
+  --input-border-error: #E07A66;
+  --input-text: #F8F9FA;
+  --input-text-disabled: #4A4D52;
+  --input-helper-fg: #A8A29B;
+  --input-helper-error-fg: #E07A66;
+  --input-focus-ring: rgb(248 249 250 / 0.15);
+  --input-icon-fg: #A8A29B;
+
+  /* A05.2 Specialized inputs — dark overrides */
+  --input-stepper-icon-fg: #6B7280;          /* same as light — static */
+  --input-icon-static-fg: #8A847C;            /* same as light — static */
+  --input-popover-item-active-bg: #26282C;
+
+  /* A05.6 Composite — textarea-specific surface (dark divergence from --input-bg) */
+  --textarea-bg: #18191B;
+  --textarea-border-base: #26282C;
+
+  /* A05.8 Uploads — drop-zone surface (dark) */
+  --upload-dropzone-bg: #1B1D20;
+  --upload-dropzone-border: #4A4D52;
+
+  /* A05.4 Selection — Switch (dark overrides) */
+  --switch-track-on: #F8F9FA;
+  --switch-track-off: #26282C;
+  --switch-thumb-on: #141517;
+  --switch-thumb-off: #F8F9FA;
+
+  /* A05.4 Selection — Checkbox (dark — only checked-bg / checked-fg invert; bg/border/error stay static) */
+  --checkbox-checked-bg: #F8F9FA;
+  --checkbox-checked-fg: #1F1D1B;
+
+  /* A05.4 Selection — Radio (dark — only dot inverts; bg/border stay static) */
+  --radio-dot: #F8F9FA;
+
+  /* A05.5 Selection cards — boxed radio variant (dark overrides) */
+  --radio-card-bg: #1B1D20;
+  --radio-card-border: #2C2F33;
+  --radio-card-selected-border: #F8F9FA;
+  --radio-card-ring: #4A4D52;
+
+  /* A06 Badge — inline tones (dark) */
+  --badge-default-bg: #F8F9FA;
+  --badge-default-fg: #18191B;
+  --badge-secondary-bg: #2E2B27;
+  --badge-secondary-fg: #F8F9FA;
+  --badge-destructive-bg: #E07A66;
+  --badge-destructive-fg: #18191B;
+  --badge-success-bg: #4FC78A33;
+  --badge-success-fg: #4FC78A;
+  --badge-success-dot: #3A8E5C;
+  --badge-warning-bg: #E0C26733;
+  --badge-warning-fg: #E0C267;
+  --badge-warning-dot: #C8A24B;
+  --badge-info-bg: #5A93FA33;
+  --badge-info-fg: #5A93FA;
+  --badge-info-dot: #2F6FE8;
+  --badge-outline-border: #26282C;
+  --badge-outline-fg: #F8F9FA;
+  --badge-opposite-bg: #18191B;
+  --badge-opposite-fg: #B5B5B5;
+  --badge-violet-bg: #A88CEB2E;
+  --badge-violet-fg: #C8B6F0;
+  --badge-violet-dot: #7C50B3;
+  --badge-emerald-bg: #4FC78A2E;
+  --badge-emerald-fg: #4FC78A;
+  --badge-emerald-dot: #3A8E5C;
+  --badge-sky-bg: #668EDE2E;
+  --badge-sky-fg: #88AAEF;
+  --badge-sky-dot: #3D6CC2;
+  --badge-orange-bg: #DDB0412E;
+  --badge-orange-fg: #DDB041;
+  --badge-orange-dot: #D48C35;
+
+  /* A06 Badge — pill tones (dark) */
+  --badge-pill-success-bg: #3A8E5C2E;
+  --badge-pill-success-fg: #4FC78A;
+  --badge-pill-success-dot: #3A8E5C;
+  --badge-pill-warning-bg: #D4A85333;
+  --badge-pill-warning-fg: #DDB041;
+  --badge-pill-warning-dot: #D4A853;
+  --badge-pill-destructive-bg: #B854502E;
+  --badge-pill-destructive-fg: #E07A66;
+  --badge-pill-destructive-dot: #B85450;
+  --badge-pill-neutral-bg: #FFFFFF14;
+  --badge-pill-neutral-fg: #B5B5B5;
+  --badge-pill-neutral-dot: #6B7280;
+  --badge-pill-chip-bg: #FFFFFF0F;
+  --badge-pill-chip-fg: #F8F9FA;
+
+  /* A08 Tooltip dark surface */
+  --tooltip-bg: #F8F9FA;
+  --tooltip-fg: #18191B;
+
+  /* A07 Avatar — body inverts in dark; skeleton flips */
+  --avatar-bg: #F8F9FA;
+  --avatar-fg: #18191B;
+  --avatar-skeleton-bg: #1B1D20;
+  --avatar-skeleton-border: #2C2F33;
+  --avatar-skeleton-fg: #6B7280;
+  --avatar-stack-ring: #18191B;
+  --avatar-status-online: #3A8E5C;
+
+  /* A10 Tabs — dark surfaces (coming-soon + count-warning intentionally not flipped) */
+  --tabs-list-bg: #18191B;
+  --tabs-trigger-active-bg: #26282C;
+  --tabs-trigger-active-fg: #F8F9FA;
+  --tabs-trigger-fg: #A8A29B;
+  --tabs-line-border: #26282C;
+  --tabs-line-indicator: #F8F9FA;
+
+  /* A20 Skeleton · dark — both tones collapse to a single value */
+  --skeleton-strong: #26282C;
+  --skeleton-soft: #26282C;
+
+  /* A13 Card · dark */
+  --card-border: #26282C;
+  --card-skeleton-strong: var(--skeleton-strong);
+  --card-skeleton-soft: var(--skeleton-soft);
+
+  /* A14 Alert · dark — icon-fg for default stays #6E6862 (Paper-locked) */
+  --alert-default-bg: #FFFFFF0A;
+  --alert-default-border: #26282C;
+  --alert-default-icon-fg: #6E6862;
+  --alert-default-title-fg: #F5F5F7;
+  --alert-default-desc-fg: #A8A29B;
+  --alert-default-action-fg: #A8A29B;
+
+  --alert-info-bg: #668EDE1A;
+  --alert-info-border: #668EDE3D;
+  --alert-info-icon-fg: #88AAEF;
+  --alert-info-title-fg: #88AAEF;
+  --alert-info-desc-fg: #A0B5DC;
+
+  --alert-success-bg: #4FC78A1A;
+  --alert-success-border: #4FC78A47;
+  --alert-success-icon-fg: #4FC78A;
+  --alert-success-title-fg: #4FC78A;
+  --alert-success-desc-fg: #7CC9A1;
+
+  --alert-warning-bg: #DDB0411F;
+  --alert-warning-border: #DDB0414D;
+  --alert-warning-icon-fg: #DDB041;
+  --alert-warning-title-fg: #DDB041;
+  --alert-warning-desc-fg: #C9A570;
+  --alert-warning-action-bg: #F8F9FA;
+  --alert-warning-action-fg: #18191B;
+
+  --alert-destructive-bg: #E07A661A;
+  --alert-destructive-border: #E07A664D;
+  --alert-destructive-icon-fg: #E07A66;
+  --alert-destructive-title-fg: #E07A66;
+  --alert-destructive-desc-fg: #D49B8B;
+  --alert-destructive-action-bg: #E07A66;
+  --alert-destructive-action-fg: #18191B;
+
+  /* A17 Dialog */
+  --dialog-overlay: rgb(0 0 0 / 0.50);
+  --dialog-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0.40);
+
+  /* A18 Sheet */
+  --sheet-overlay: rgb(0 0 0 / 0.50);
+  --sheet-shadow: none;
+  --sheet-footer-bg: var(--popover);
+
+  /* A21 Toaster · dark — heavier single-layer shadow per Paper */
+  --toast-shadow: 0 0.75rem 1.75rem rgb(0 0 0 / 0.50);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans leading-relaxed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight text-foreground font-medium;
+  }
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+  h6 {
+    @apply text-base md:text-lg;
+  }
+  .section-label {
+    @apply font-sans uppercase tracking-widest text-xs md:text-sm text-cmni-gold font-semibold;
+  }
+}
+
+/* BubbleMenu: z-index on the floating-ui absolute container */
+div:has(> .bubble-menu-content) {
+  z-index: 10;
+}
+
+@keyframes slide-fade-in-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-fade-out-to-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slide-fade-in-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-fade-out-to-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-fade-in-from-top {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-fade-out-to-top {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes slide-fade-in-from-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-fade-out-to-bottom {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes grain {
+  0%   { transform: translateX(0%)  translateY(0%); }
+  25%  { transform: translateX(-3%) translateY(6%); }
+  50%  { transform: translateX(5%)  translateY(-4%); }
+  75%  { transform: translateX(-1%) translateY(3%); }
+  100% { transform: translateX(0%)  translateY(0%); }
+}
+
+@theme inline {
+  --animate-slide-fade-in-from-right: slide-fade-in-from-right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-fade-out-to-right: slide-fade-out-to-right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-fade-in-from-left: slide-fade-in-from-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-fade-out-to-left: slide-fade-out-to-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-fade-in-from-top: slide-fade-in-from-top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-fade-out-to-top: slide-fade-out-to-top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-fade-in-from-bottom: slide-fade-in-from-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-fade-out-to-bottom: slide-fade-out-to-bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
