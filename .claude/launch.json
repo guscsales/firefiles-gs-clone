@@ -1,0 +1,30 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "next-dev",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["dev"],
+      "port": 2609,
+      "autoPort": false
+    },
+    {
+      "name": "email-preview",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["email"],
+      "port": 7777
+    },
+    {
+      "name": "drizzle-studio",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["db:studio"],
+      "port": 4983
+    },
+    {
+      "name": "trigger-dev",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["trigger:dev"],
+      "port": 0
+    }
+  ]
+}
