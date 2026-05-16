@@ -1,0 +1,13 @@
+services:
+  firefiles_pg_main:
+    image: postgres:17
+    container_name: firefiles-pg-main
+    ports:
+      - "7490:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=firefiles
+    volumes:
+      - ./.database/pg-main:/var/lib/postgresql/data
+    restart: unless-stopped
