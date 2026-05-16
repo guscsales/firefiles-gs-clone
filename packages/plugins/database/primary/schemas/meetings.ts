@@ -16,7 +16,7 @@ export const meetingStatusEnum = pgEnum('meeting_status', [
 
 export const meetings = pgTable('meeting', {
   id: uuid('id').primaryKey().defaultRandom(),
-  title: text('title').notNull(),
+  title: text('title').notNull().default('Untitled Meeting'),
   transcriptOutput: jsonb('transcript_output'),
   summary: text('summary'),
   actionItems: jsonb('action_items'),

@@ -1,0 +1,1 @@
+ALTER TABLE "meeting" ALTER COLUMN "title" SET DEFAULT 'Untitled Meeting';
