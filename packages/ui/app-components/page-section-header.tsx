@@ -18,7 +18,7 @@ export function PageSectionHeader({
   return (
     <header
       className={cn(
-        'sticky left-0 w-[100cqw] flex items-end gap-6 pt-8 pb-[1.375rem] px-6 border-b',
+        'sticky left-0 w-[100cqw] flex items-end gap-6 pt-8 pb-[1.375rem] px-6 border-b bg-cmni-light',
         className
       )}
     >
@@ -38,7 +38,7 @@ export function PageSectionHeader({
           {title}
         </h1>
         {description && (
-          <p className="max-w-[33.75rem] text-sm leading-5 text-muted-foreground">
+          <p className="text-sm leading-5 text-muted-foreground">
             {description}
           </p>
         )}

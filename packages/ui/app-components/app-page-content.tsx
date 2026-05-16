@@ -7,8 +7,8 @@ interface AppPageContentProps extends React.ComponentProps<'div'> {
 
 export function AppPageContent({
   className,
-  paddingY = true,
-  paddingX = true,
+  paddingY = false,
+  paddingX = false,
   ...props
 }: AppPageContentProps) {
   return (

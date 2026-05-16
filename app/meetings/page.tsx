@@ -10,9 +10,11 @@ export default function MeetingsPage() {
         <PageSectionHeader
           eyebrow="Your Meetings"
           title="Meetings"
-          description="Discover more about your meetings here."
+          description="See all your meetings that are ready or processing. Enter in some of them to have more details."
         />
-        <p className="text-muted-foreground">No meetings yet.</p>
+        <div className="p-6">
+          <p className="text-muted-foreground">No meetings yet.</p>
+        </div>
       </AppPageContent>
     </>
   );

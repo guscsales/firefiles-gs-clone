@@ -1,0 +1,116 @@
+{
+  "completed_at": "2023-11-08T22:20:03.016803Z",
+  "created_at": "2023-11-08T22:18:39.366570Z",
+  "data_removed": false,
+  "error": null,
+  "id": "4bzv3trbxdeyon73ve6itzvycq",
+  "input": {
+    "audio": "https://replicate.delivery/mgxm/e5159b1b-508a-4be4-b892-e1eb47850bdc/OSR_uk_000_0050_8k.wav",
+    "model": "large-v3",
+    "translate": false,
+    "temperature": 0,
+    "transcription": "plain text",
+    "suppress_tokens": "-1",
+    "logprob_threshold": -1,
+    "no_speech_threshold": 0.6,
+    "condition_on_previous_text": true,
+    "compression_ratio_threshold": 2.4,
+    "temperature_increment_on_fallback": 0.2
+  },
+  "logs": "Transcribe with large-v3 model.\nDetected language: English\n  0%|          | 0/5241 [00:00<?, ?frames/s]\n 35%|███▌      | 1860/5241 [00:03<00:06, 522.23frames/s]\n 93%|█████████▎| 4860/5241 [00:08<00:00, 583.46frames/s]\n100%|██████████| 5241/5241 [00:10<00:00, 479.51frames/s]\n100%|██████████| 5241/5241 [00:10<00:00, 506.10frames/s]",
+  "metrics": {
+    "predict_time": 16.57265,
+    "total_time": 83.650233
+  },
+  "output": {
+    "segments": [
+      {
+        "id": 0,
+        "end": 18.6,
+        "seek": 0,
+        "text": " the little tales they tell are false the door was barred locked and bolted as well ripe pears are fit for a queen's table a big wet stain was on the round carpet",
+        "start": 0,
+        "tokens": [
+          50365, 264, 707, 27254, 436, 980, 366, 7908, 264, 2853, 390, 2159,
+          986, 9376, 293, 13436, 292, 382, 731, 31421, 520, 685, 366, 3318, 337,
+          257, 12206, 311, 3199, 257, 955, 6630, 16441, 390, 322, 264, 3098,
+          18119, 51295
+        ],
+        "avg_logprob": -0.060722851171726135,
+        "temperature": 0,
+        "no_speech_prob": 0.05907342955470085,
+        "compression_ratio": 1.412280701754386
+      },
+      {
+        "id": 1,
+        "end": 31.840000000000003,
+        "seek": 1860,
+        "text": " the kite dipped and swayed but stayed aloft the pleasant hours fly by much too soon the room was crowded with a mild wab",
+        "start": 18.6,
+        "tokens": [
+          50365, 264, 38867, 45162, 293, 27555, 292, 457, 9181, 419, 6750, 264,
+          16232, 2496, 3603, 538, 709, 886, 2321, 264, 1808, 390, 21634, 365,
+          257, 15154, 261, 455, 51027
+        ],
+        "avg_logprob": -0.1184891973223005,
+        "temperature": 0,
+        "no_speech_prob": 0.000253104604780674,
+        "compression_ratio": 1.696969696969697
+      },
+      {
+        "id": 2,
+        "end": 45.2,
+        "seek": 1860,
+        "text": " the room was crowded with a wild mob this strong arm shall shield your honour she blushed when he gave her a white orchid",
+        "start": 31.840000000000003,
+        "tokens": [
+          51027, 264, 1808, 390, 21634, 365, 257, 4868, 4298, 341, 2068, 3726,
+          4393, 10257, 428, 20631, 750, 25218, 292, 562, 415, 2729, 720, 257,
+          2418, 34850, 327, 51695
+        ],
+        "avg_logprob": -0.1184891973223005,
+        "temperature": 0,
+        "no_speech_prob": 0.000253104604780674,
+        "compression_ratio": 1.696969696969697
+      },
+      {
+        "id": 3,
+        "end": 48.6,
+        "seek": 1860,
+        "text": " the beetle droned in the hot june sun",
+        "start": 45.2,
+        "tokens": [
+          51695, 264, 49735, 1224, 19009, 294, 264, 2368, 361, 2613, 3295, 51865
+        ],
+        "avg_logprob": -0.1184891973223005,
+        "temperature": 0,
+        "no_speech_prob": 0.000253104604780674,
+        "compression_ratio": 1.696969696969697
+      },
+      {
+        "id": 4,
+        "end": 52.38,
+        "seek": 4860,
+        "text": " the beetle droned in the hot june sun",
+        "start": 48.6,
+        "tokens": [
+          50365, 264, 49735, 1224, 19009, 294, 264, 2368, 361, 2613, 3295, 50554
+        ],
+        "avg_logprob": -0.30115177081181455,
+        "temperature": 0.2,
+        "no_speech_prob": 0.292143315076828,
+        "compression_ratio": 0.8409090909090909
+      }
+    ],
+    "translation": null,
+    "transcription": " the little tales they tell are false the door was barred locked and bolted as well ripe pears are fit for a queen's table a big wet stain was on the round carpet the kite dipped and swayed but stayed aloft the pleasant hours fly by much too soon the room was crowded with a mild wab the room was crowded with a wild mob this strong arm shall shield your honour she blushed when he gave her a white orchid the beetle droned in the hot june sun the beetle droned in the hot june sun",
+    "detected_language": "english"
+  },
+  "started_at": "2023-11-08T22:19:46.444153Z",
+  "status": "succeeded",
+  "urls": {
+    "get": "https://api.replicate.com/v1/predictions/4bzv3trbxdeyon73ve6itzvycq",
+    "cancel": "https://api.replicate.com/v1/predictions/4bzv3trbxdeyon73ve6itzvycq/cancel"
+  },
+  "version": "4d50797290df275329f202e48c76360b3f22b08d28c196cbc54600319435f8d2"
+}
