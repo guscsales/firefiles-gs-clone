@@ -118,6 +118,18 @@ Forms use `react-hook-form` + `zod` + `useTransition` (not `useState`) for loadi
 
 ## Testing
 
+### Test-Driven Development (TDD) — Non-negotiable
+
+**All feature and bugfix work MUST follow TDD.** Write tests first, watch them fail, then implement until they pass.
+
+1. **Red** — Write a failing test that describes the expected behavior.
+2. **Green** — Write the minimal code to make the test pass.
+3. **Refactor** — Clean up while keeping tests green.
+
+Do not write implementation code before its corresponding test exists. This applies to services, API routes, hooks, and utilities. UI components that are purely presentational (no logic, no side effects) are exempt.
+
+### Framework
+
 - **Framework**: Vitest with happy-dom environment and `@testing-library/react`
 - **Setup**: `vitest.setup.ts` imports `@testing-library/jest-dom`
 - **Pattern**: Tests in `__tests__/` directories, files named `*.test.ts(x)`

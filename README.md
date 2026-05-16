@@ -19,7 +19,7 @@ TBD...
 
 - One fullstack codebase.
 - Deploys to Vercel in one click, same place I'm already shipping the database and storage from, so zero infra glue.
-- I'm using my open-source boilerplate `create-my-next-idea`, which ships with the foundation already wired: shadcn/ui, app shell with header and sidebar, Drizzle + Neon, and Vercel AI Gateway for LLM calls. This saves the 1–2h of setup I'd otherwise burn before writing a single feature.
+- I'm using my open-source boilerplate `create-my-next-idea`, which ships with the foundation already wired: shadcn/ui, app shell with header and sidebar, Drizzle + Neon. This saves the 1–2h of setup I'd otherwise burn before writing a single feature.
 
 ### 2. Database: Neon Postgres + Drizzle
 
@@ -31,7 +31,7 @@ TBD...
 - Mock transcripts are small. Even a real Whisper output for a 30-minute meeting is ~50KB of text, which is trivial for Postgres.
 - An extra Blob fetch would add latency and complexity for zero benefit at this scale.
 
-### 4. LLM: Claude Haiku 4.5 via Vercel AI Gateway
+### 4. LLM: Claude Haiku 4.5 via Anthropic SDK
 
 - Already wired in my boilerplate, so no new SDK to add.
 - AI Gateway gives me a single endpoint + observability + easy model
