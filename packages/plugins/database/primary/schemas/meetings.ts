@@ -8,7 +8,6 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const meetingStatusEnum = pgEnum('meeting_status', [
-  'recording',
   'processing',
   'ready',
   'failed'
@@ -20,7 +19,7 @@ export const meetings = pgTable('meeting', {
   transcriptOutput: jsonb('transcript_output'),
   summary: text('summary'),
   actionItems: jsonb('action_items'),
-  status: meetingStatusEnum('status').notNull().default('recording'),
+  status: meetingStatusEnum('status').notNull().default('processing'),
   errorMessage: text('error_message'),
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()

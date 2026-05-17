@@ -1,3 +1,4 @@
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import {
   ALLOWED_EXTENSIONS,
@@ -5,7 +6,10 @@ import {
   MAX_FILE_SIZE
 } from '@/app/meetings/_validators/meeting-upload';
 import { getMockTranscription } from '@/packages/factory/meetings/mocks/get-mock-transcription';
-import { createMeeting } from '@/packages/factory/meetings/services/meeting-service';
+import {
+  createMeeting,
+  listMeetings
+} from '@/packages/factory/meetings/services/meeting-service';
 import { createLoggerClient } from '@/packages/plugins/logger/logger';
 
 const logger = createLoggerClient('api:meetings');
@@ -21,6 +25,36 @@ function _getFileExtension(filename: string): string {
   const lastDot = filename.lastIndexOf('.');
   if (lastDot === -1) return '';
   return filename.slice(lastDot).toLowerCase();
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = request.nextUrl;
+
+    const page = Number(searchParams.get('page') ?? 1);
+    const pageSize = Number(searchParams.get('pageSize') ?? 10);
+    const sortBy =
+      (searchParams.get('sortBy') as 'title' | 'createdAt') ?? 'createdAt';
+    const sortOrder =
+      (searchParams.get('sortOrder') as 'asc' | 'desc') ?? 'desc';
+    const search = searchParams.get('search') ?? undefined;
+
+    const result = await listMeetings({
+      page,
+      pageSize,
+      sortBy,
+      sortOrder,
+      search
+    });
+
+    return NextResponse.json(result);
+  } catch (error) {
+    logger.error('Failed to list meetings', error);
+    return NextResponse.json(
+      { error: [{ path: ['server'], message: 'Internal server error' }] },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {

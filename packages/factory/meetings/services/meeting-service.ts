@@ -22,7 +22,7 @@ type ListMeetingsParams = {
 
 type CreateMeetingParams = {
   transcriptOutput: object;
-  status?: 'recording' | 'processing' | 'ready' | 'failed';
+  status?: 'processing' | 'ready' | 'failed';
 };
 
 type UpdateMeetingParams = {
@@ -30,7 +30,7 @@ type UpdateMeetingParams = {
   transcriptOutput?: unknown;
   summary?: string;
   actionItems?: unknown;
-  status?: 'recording' | 'processing' | 'ready' | 'failed';
+  status?: 'processing' | 'ready' | 'failed';
   errorMessage?: string;
 };
 

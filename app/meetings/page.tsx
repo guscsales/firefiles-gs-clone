@@ -1,6 +1,7 @@
 import { AppPageContent } from '@/packages/ui/app-components/app-page-content';
 import { AppPageHeader } from '@/packages/ui/app-components/app-page-header';
 import { PageSectionHeader } from '@/packages/ui/app-components/page-section-header';
+import { MeetingsTable } from './_components/meetings-table';
 import { UploadMeetingDialog } from './_components/upload-meeting-dialog';
 
 export default function MeetingsPage() {
@@ -14,9 +15,7 @@ export default function MeetingsPage() {
           description="See all your meetings that are ready or processing. Enter in some of them to have more details."
           actions={<UploadMeetingDialog />}
         />
-        <div className="p-6">
-          <p className="text-muted-foreground">No meetings yet.</p>
-        </div>
+        <MeetingsTable />
       </AppPageContent>
     </>
   );
