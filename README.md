@@ -40,9 +40,11 @@ bun run test:integration   # Integration tests (spins up Docker Postgres, runs a
 bun lint                   # Biome linter
 ```
 
-# Production App Running
+## Live Demo
 
-Here's a version running in prod: https://firefiles-gs-clone.vercel.app
+- **App**: https://firefiles-gs-clone.vercel.app
+- **Product demo**: https://www.tella.tv/video/firefiles-demo-ai-meeting-transcription-and-summary-demo-duu6
+- **Build process & decisions**: https://www.tella.tv/video/firefiles-demo-my-process-and-decisions-6btn
 
 # Decisions
 
