@@ -14,12 +14,8 @@ export function MeetingTabs({ meeting }: { meeting: MeetingDetail }) {
   return (
     <Tabs defaultValue="summary">
       <TabsList variant="line" className="w-full">
-        <TabsTrigger value="summary" variant="line">
-          Summary
-        </TabsTrigger>
-        <TabsTrigger value="transcription" variant="line">
-          Transcription
-        </TabsTrigger>
+        <TabsTrigger value="summary">Summary</TabsTrigger>
+        <TabsTrigger value="transcription">Transcription</TabsTrigger>
       </TabsList>
       <TabsContent value="summary">
         <MeetingSummaryTab

@@ -79,7 +79,7 @@ export function UploadMeetingDialog() {
           <DialogBody>
             <InputFileUpload
               name="file"
-              control={form.control}
+              control={form.control as never}
               label="Recording file"
               error={form.formState.errors.file?.message}
               required
@@ -89,7 +89,7 @@ export function UploadMeetingDialog() {
                 maxSize: MAX_FILE_SIZE
               }}
               firstLinePlaceholder="Drop audio/video file or browse"
-              secondLinePlaceholder="MP3, MP4, WAV, WebM — up to 25MB"
+              secondLinePlaceholder="MP3, MP4, WAV, WebM — up to 4.5MB"
             />
           </DialogBody>
           <DialogFooter>

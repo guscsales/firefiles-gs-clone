@@ -19,6 +19,6 @@ export const ALLOWED_MIME_TYPES = [
   'video/webm'
 ];
 
-export const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB
+export const MAX_FILE_SIZE = 4.5 * 1024 * 1024; // 4.5MB
 
 export const ACCEPT_STRING = ALLOWED_MIME_TYPES.join(',');

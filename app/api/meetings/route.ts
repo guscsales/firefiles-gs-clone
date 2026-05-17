@@ -1,6 +1,7 @@
 import { waitUntil } from '@vercel/functions';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+
 import {
   ALLOWED_EXTENSIONS,
   ALLOWED_MIME_TYPES,

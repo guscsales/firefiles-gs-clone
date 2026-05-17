@@ -9,7 +9,7 @@
 - Bun (`npm install -g bun`)
 - An [Anthropic API key](https://console.anthropic.com/)
 - *(Optional)* A [Replicate API key](https://replicate.com/) — if `REPLICATE_API_KEY` is set, uploaded files are transcribed with OpenAI Whisper via Replicate. If absent, a mock transcription is used instead.
-- A test video file `gitlab-public-meeting.mp4` is included in the repo root for easy testing.
+- A test video file `video-for-testing/gitlab-public-meeting.mp4` is included in the repo root for easy testing.
 
 ### Setup
 
@@ -144,3 +144,12 @@ The script `bash scripts/run-integration-tests.sh` instantiate a temporary postg
 
 - **Authentication + Multi-tenant:** Single-user demo. In production I'd use Better Auth, but adds nothing for a code review.
 - **Job queues / retry orchestration:** Background processing uses `waitUntil()` which is sufficient for this scope. A production system would add Trigger.dev or similar for retries, dead letter queues, and multi-step orchestration.
+
+## Estimated time
+
+| Activity | Estimated time |
+|----------|---------------|
+| Product research + task preparation | ~1h30m |
+| Coding (all features, tests, infra) | ~5h |
+| Deploy, final revision, cleanup | ~1h |
+| **Total** | **~7h30m** |
