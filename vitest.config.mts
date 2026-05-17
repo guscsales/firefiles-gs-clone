@@ -18,7 +18,7 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
-    exclude: ['node_modules/**', '.claude/**'],
+    exclude: ['node_modules/**', '.claude/**', '**/*.integration.test.ts'],
     coverage: {
       reporter: ['text', 'html'],
       reportsDirectory: './coverage'

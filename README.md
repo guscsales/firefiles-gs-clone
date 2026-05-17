@@ -64,6 +64,26 @@ much pain upfront. So I divide the project like this:
 - All of these conventions are documented in `CLAUDE.md` so the AI follows
   the same patterns I do.
 
+### 6. Automated Tests Structure
+
+#### Frontend (unit + component integration):
+
+The decision here is to make sure the components are working and requesting correctly what's necessary.
+
+- Render real component trees (dialog → form → button, DataTable → columns → badges)
+- Mock only the API boundary (fetch), everything above it runs for real
+- Test user flows end-to-end within the component: click, type, submit, verify DOM changes
+- Hooks tested with renderHook + mocked fetch
+
+#### Backend (integration against real DB):
+
+The script `bash scripts/run-integration-tests.sh` instantiate a temporary postgres and push the schema there, so it's possible to test real situations without mock the DB and have more resilient tests.
+
+- Service tests hit a real Docker Postgres, no Drizzle mock chains
+- Prove SQL actually works: insert, select, verify, pagination, sorting, edge cases, business logic
+- Mock only external third-parties (Anthropic API, etc.) and anything outside your system boundary
+- API route tests can use real service + real DB too, mocking only third-party calls
+
 ## Used libraries (and why)
 
 - **Next.js (on Vercel)** — one codebase for frontend, API routes, and server logic. One deploy.

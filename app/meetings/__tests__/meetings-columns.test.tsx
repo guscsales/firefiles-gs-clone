@@ -1,36 +1,29 @@
 // @vitest-environment jsdom
 
-import { flexRender } from '@tanstack/react-table';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { DataTable } from '@/packages/ui/app-components/data-table';
 import {
   type MeetingRow,
   meetingsColumns
 } from '../_components/meetings-columns';
 
-function renderCell(columnId: string, row: MeetingRow) {
-  const column = meetingsColumns.find(
-    (c) =>
-      c.id === columnId || ('accessorKey' in c && c.accessorKey === columnId)
-  );
-  if (!column?.cell) return null;
-
-  const cellFn = column.cell;
-  const context = {
-    row: { original: row, id: '0' },
-    getValue: () => row[columnId as keyof MeetingRow]
-  };
-
-  const element = flexRender(cellFn, context as never);
-  return render(<>{element}</>);
-}
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+  usePathname: () => '/meetings',
+  useSearchParams: () => new URLSearchParams()
+}));
 
 const baseMeeting: MeetingRow = {
   id: 'test-id',
-  title: 'Test Meeting',
+  title: 'Weekly Standup',
   status: 'processing',
   createdAt: '2026-05-16T12:00:00Z'
 };
+
+function _renderTable(data: MeetingRow[]) {
+  return render(<DataTable columns={meetingsColumns} data={data} />);
+}
 
 describe('meetingsColumns', () => {
   it('defines three columns: title, status, createdAt', () => {
@@ -61,45 +54,61 @@ describe('meetingsColumns', () => {
     expect(createdCol?.enableSorting).toBe(true);
   });
 
-  describe('title cell', () => {
+  describe('rendered in DataTable', () => {
     it('renders meeting title', () => {
-      renderCell('title', baseMeeting);
-      expect(screen.getByText('Test Meeting')).toBeInTheDocument();
+      _renderTable([baseMeeting]);
+      expect(screen.getByText('Weekly Standup')).toBeInTheDocument();
     });
-  });
 
-  describe('status cell', () => {
-    it('renders Processing badge with braille loader for processing status', () => {
-      renderCell('status', { ...baseMeeting, status: 'processing' });
+    it('renders Processing badge with braille loader', () => {
+      _renderTable([{ ...baseMeeting, status: 'processing' }]);
       expect(screen.getByText('Processing')).toBeInTheDocument();
       expect(screen.getByRole('status')).toBeInTheDocument();
     });
 
-    it('renders Ready badge for ready status', () => {
-      renderCell('status', { ...baseMeeting, status: 'ready' });
+    it('renders Ready badge without braille loader', () => {
+      _renderTable([{ ...baseMeeting, status: 'ready' }]);
       expect(screen.getByText('Ready')).toBeInTheDocument();
+      expect(screen.queryByRole('status')).not.toBeInTheDocument();
     });
 
-    it('renders Failed badge for failed status', () => {
-      renderCell('status', { ...baseMeeting, status: 'failed' });
+    it('renders Failed badge without braille loader', () => {
+      _renderTable([{ ...baseMeeting, status: 'failed' }]);
+      expect(screen.getByText('Failed')).toBeInTheDocument();
+      expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    });
+
+    it('formats date as "MMM d, yyyy"', () => {
+      _renderTable([baseMeeting]);
+      expect(screen.getByText('May 16, 2026')).toBeInTheDocument();
+    });
+
+    it('renders multiple rows with different statuses', () => {
+      _renderTable([
+        { ...baseMeeting, id: '1', title: 'Meeting A', status: 'processing' },
+        { ...baseMeeting, id: '2', title: 'Meeting B', status: 'ready' },
+        { ...baseMeeting, id: '3', title: 'Meeting C', status: 'failed' }
+      ]);
+
+      expect(screen.getByText('Meeting A')).toBeInTheDocument();
+      expect(screen.getByText('Meeting B')).toBeInTheDocument();
+      expect(screen.getByText('Meeting C')).toBeInTheDocument();
+      expect(screen.getByText('Processing')).toBeInTheDocument();
+      expect(screen.getByText('Ready')).toBeInTheDocument();
       expect(screen.getByText('Failed')).toBeInTheDocument();
     });
 
-    it('does not render braille loader for ready status', () => {
-      renderCell('status', { ...baseMeeting, status: 'ready' });
-      expect(screen.queryByRole('status')).not.toBeInTheDocument();
-    });
-
-    it('does not render braille loader for failed status', () => {
-      renderCell('status', { ...baseMeeting, status: 'failed' });
-      expect(screen.queryByRole('status')).not.toBeInTheDocument();
-    });
-  });
-
-  describe('createdAt cell', () => {
-    it('formats date as "MMM d, yyyy"', () => {
-      renderCell('createdAt', baseMeeting);
-      expect(screen.getByText('May 16, 2026')).toBeInTheDocument();
+    it('shows empty state when no data', () => {
+      render(
+        <DataTable
+          columns={meetingsColumns}
+          data={[]}
+          emptyTitle="Upload a meeting to get started"
+        />
+      );
+      expect(
+        screen.getByText('Upload a meeting to get started')
+      ).toBeInTheDocument();
     });
   });
 });

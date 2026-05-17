@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 bun dev              # Start dev server on port 7879
 bun build            # Production build
-bun test             # Run all unit tests
-bun test:unit        # Run tests with coverage (vitest + v8)
+bun test:unit        # Run unit tests with coverage (vitest + v8)
+bun test:integration # Run integration tests (Docker Postgres, real DB)
 bun lint             # Biome check
 bun db:generate      # Generate Drizzle migrations
 bun db:push          # Push schema to database
@@ -118,6 +118,16 @@ Forms use `react-hook-form` + `zod` + `useTransition` (not `useState`) for loadi
 
 ## Testing
 
+### Commands
+
+```bash
+bun run test:unit         # Unit tests (Vitest + happy-dom, fast, no DB)
+bun run test:integration  # Integration tests (spins up Docker Postgres, runs against real DB, cleans up)
+bun lint                  # Biome linter
+```
+
+Both commands must pass before any commit.
+
 ### Test-Driven Development (TDD) — Non-negotiable
 
 **All feature and bugfix work MUST follow TDD.** Write tests first, watch them fail, then implement until they pass.
@@ -128,12 +138,30 @@ Forms use `react-hook-form` + `zod` + `useTransition` (not `useState`) for loadi
 
 Do not write implementation code before its corresponding test exists. This applies to services, API routes, hooks, and utilities. UI components that are purely presentational (no logic, no side effects) are exempt.
 
+### Test Strategy
+
+**Frontend (unit tests — `*.test.ts(x)`):**
+- Render real component trees (dialog → form → button, DataTable → columns → badges)
+- Mock only the API boundary (`fetch`) — everything above it runs for real
+- Test user flows end-to-end within the component: click → type → submit → verify DOM changes
+- Hooks tested with `renderHook` from `@testing-library/react` + mocked `fetch`
+- No mocking React Query, nuqs, or component internals
+
+**Backend (integration tests — `*.integration.test.ts`):**
+- Service tests hit a real Docker Postgres — no Drizzle mock chains
+- Prove SQL actually works: insert → select → verify, pagination, sorting, edge cases
+- Mock only external third-parties (Anthropic API, etc.) — anything outside our system boundary
+- Each test cleans up its data in `beforeEach`
+- Config: `vitest.integration.config.ts` (node env, 30s timeout, no parallelism)
+- Infrastructure: `scripts/run-integration-tests.sh` spins up Docker Postgres on port 5555, pushes schema, runs tests, cleans up
+
 ### Framework
 
 - **Framework**: Vitest with happy-dom environment and `@testing-library/react`
 - **Setup**: `vitest.setup.ts` imports `@testing-library/jest-dom`
-- **Pattern**: Tests in `__tests__/` directories, files named `*.test.ts(x)`
-- **Mocking**: Use `vi.mock()` for module mocks; mock `@/env` in tests that import modules using env
+- **Unit tests**: `__tests__/` directories, files named `*.test.ts(x)`
+- **Integration tests**: `__tests__/` directories, files named `*.integration.test.ts`
+- **Mocking**: Use `vi.mock()` for module mocks; mock `@/env` in unit tests that import modules using env. Use `vi.hoisted()` when mocks reference variables.
 - **User events**: Use `@testing-library/user-event` for simulating user interactions
 
 ### Test Quality Standards
@@ -141,8 +169,10 @@ Do not write implementation code before its corresponding test exists. This appl
 Tests must validate **error and edge cases**, not only the happy path.
 
 - **API route tests**: Assert validation error response **body shape** — `body.error` must be an array of Zod issue objects. Never just check status code.
-- **Schema validation**: Verify invalid input types are rejected.
-- **Service tests**: When a service transforms data, test that output matches expected format.
+- **Service tests**: Integration tests against real DB. No mock chains for Drizzle query builder.
+- **Hook tests**: Test with `renderHook` + `QueryClientProvider` wrapper. Verify fetch calls, cache invalidation, and error handling.
+- **Component tests**: Render real component trees. Test user-visible behavior, not internal rendering APIs.
+- **Don't test constants**: If a constant is already tested implicitly by another test (e.g. API route uses the validator constants), don't write a separate test for the constant values.
 
 ### Validation After Changes
 
@@ -151,6 +181,11 @@ After creating or modifying files, always run the full test suite and linter:
 ```bash
 bun run test:unit   # Run ALL unit tests
 bun lint            # Run Biome on entire codebase
+```
+
+Run integration tests when backend service logic changes:
+```bash
+bun run test:integration  # Requires Docker
 ```
 
 Auto-fix formatting issues:
