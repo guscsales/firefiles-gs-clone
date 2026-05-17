@@ -2,7 +2,41 @@
 
 ## How to run
 
-TBD...
+### Prerequisites
+
+- Node.js 22+
+- Docker
+- Bun (`npm install -g bun`)
+- An [Anthropic API key](https://console.anthropic.com/)
+
+### Setup
+
+```bash
+# 1. Start Postgres
+docker compose up -d
+
+# 2. Configure environment
+cp .env.example .env.local
+# Edit .env.local and add your real Anthropic API key
+
+# 3. Install dependencies
+bun install
+
+# 4. Push database schema
+bun db:push
+
+# 5. Start dev server
+bun dev
+# → http://localhost:7879
+```
+
+### Running tests
+
+```bash
+bun run test:unit          # Unit tests (Vitest + happy-dom)
+bun run test:integration   # Integration tests (spins up Docker Postgres, runs against real DB, cleans up)
+bun lint                   # Biome linter
+```
 
 # Decisions
 
@@ -33,13 +67,23 @@ TBD...
 
 ### 4. LLM: Claude Haiku 4.5 via Anthropic SDK
 
-- Already wired in my boilerplate, so no new SDK to add.
-- AI Gateway gives me a single endpoint + observability + easy model
-swaps without touching app code.
 - Claude Haiku 4.5 is strong at structured JSON output, which I need for action items.
-- Important to define length limits to avoid excessive token usage and potential costs and API exploration.
+- The Anthropic TypeScript SDK is lightweight and straightforward to use.
+- Important to define length limits to avoid excessive token usage and potential costs.
 
-### 5. Code patterns
+### 5. Background AI processing with `waitUntil()`
+
+- After a meeting is uploaded, AI processing (title, summary, action items extraction) runs in the background using `waitUntil()` from `@vercel/functions`.
+- I evaluated `p-queue` first, but it breaks in Vercel serverless because in-memory queues die when the function instance is killed. `waitUntil()` keeps the function alive after the response is sent, works in both local dev and Vercel production, and requires zero extra infrastructure.
+- The upload returns 201 immediately while AI processes in background. The frontend polls every 5 seconds and picks up the status change automatically.
+
+### 6. AI output quality validation
+
+- After the LLM extracts meeting metadata, a second AI call validates the output quality before saving it.
+- This catches cases where the transcript isn't a real meeting (random audio, music, silence) — the LLM would return refusal language or hallucinated content instead of genuine meeting intelligence.
+- If the quality check fails, the meeting is marked as `failed` with a clear error message visible to the user via a tooltip on the error icon.
+
+### 7. Code patterns
 
 I like to separate domains and responsibilities, even inside a fullstack
 Next.js folder. You never know how an app will grow, and there's no silver
@@ -64,7 +108,7 @@ much pain upfront. So I divide the project like this:
 - All of these conventions are documented in `CLAUDE.md` so the AI follows
   the same patterns I do.
 
-### 6. Automated Tests Structure
+### 8. Automated Tests Structure
 
 #### Frontend (unit + component integration):
 
@@ -96,4 +140,5 @@ The script `bash scripts/run-integration-tests.sh` instantiate a temporary postg
 ## Out of scope (and why)
 
 - **Authentication + Multi-tenant:** Single-user demo. In production I'd use Better Auth, but adds nothing for a code review.
-- **Jobs:** Since most of the transcriptions will be small, we can wait AI to solve it in a request instead of send to a [trigger.dev](http://trigger.dev) or similar.
+- **Job queues / retry orchestration:** Background processing uses `waitUntil()` which is sufficient for this scope. A production system would add Trigger.dev or similar for retries, dead letter queues, and multi-step orchestration.
+- **Real audio transcription:** Currently uses a mock transcription. In production, this would call Whisper or a similar speech-to-text API.
