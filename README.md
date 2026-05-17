@@ -40,6 +40,10 @@ bun run test:integration   # Integration tests (spins up Docker Postgres, runs a
 bun lint                   # Biome linter
 ```
 
+# Production App Running
+
+Here's a version running in prod: https://firefiles-gs-clone.vercel.app
+
 # Decisions
 
 ## Guiding principles
