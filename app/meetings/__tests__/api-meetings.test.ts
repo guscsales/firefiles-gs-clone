@@ -1,13 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/env', () => ({
-  env: {
-    DATABASE_URL: 'postgres://test',
-    AI_API_KEY: 'test-key',
-    REPLICATE_API_KEY: undefined
-  }
-}));
-
 vi.mock('@/packages/factory/meetings/services/meeting-service', () => ({
   createMeeting: vi.fn().mockResolvedValue({
     id: 'test-uuid',
@@ -36,15 +28,6 @@ vi.mock('@/packages/factory/meetings/services/meeting-ai-service', () => ({
 
 vi.mock('@vercel/functions', () => ({
   waitUntil: vi.fn()
-}));
-
-vi.mock('@/packages/factory/meetings/mocks/get-mock-transcription', () => ({
-  getMockTranscription: vi.fn().mockReturnValue({
-    segments: [],
-    transcriptionText: 'test text',
-    durationSeconds: 10,
-    detectedLanguage: 'english'
-  })
 }));
 
 vi.mock('@/packages/plugins/logger/logger', () => ({

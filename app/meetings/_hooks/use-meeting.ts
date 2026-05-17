@@ -9,14 +9,20 @@ async function _uploadMeetingFn(formData: FormData) {
     body: formData
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
-    const message = data?.error?.[0]?.message ?? 'Failed to upload meeting';
+    let message = 'Failed to upload meeting';
+    try {
+      const data = await response.json();
+      message = data?.error?.[0]?.message ?? message;
+    } catch {
+      if (response.status === 413) {
+        message = 'File too large. Please upload a smaller file.';
+      }
+    }
     throw new Error(message);
   }
 
-  return data;
+  return response.json();
 }
 
 export function useMeeting() {

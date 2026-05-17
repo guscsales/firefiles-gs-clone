@@ -8,12 +8,23 @@ vi.mock('@anthropic-ai/sdk', () => ({
   }
 }));
 
+const mockEnv = vi.hoisted(() => ({
+  AI_API_KEY: 'test-key',
+  DATABASE_URL: 'postgresql://test',
+  REPLICATE_API_KEY: undefined as string | undefined
+}));
+
 vi.mock('@/env', () => ({
-  env: {
-    AI_API_KEY: 'test-key',
-    DATABASE_URL: 'postgresql://test',
-    REPLICATE_API_KEY: 'test-replicate-key'
-  }
+  env: mockEnv
+}));
+
+vi.mock('@/packages/factory/meetings/mocks/get-mock-transcription', () => ({
+  getMockTranscription: vi.fn().mockReturnValue({
+    segments: [],
+    transcriptionText: 'Mock transcript text',
+    durationSeconds: 60,
+    detectedLanguage: 'english'
+  })
 }));
 
 const mockGetMeetingById = vi.fn();
@@ -78,7 +89,11 @@ describe('meeting-ai-service', () => {
     const { processMeetingTranscript } = await import(
       '../services/meeting-ai-service'
     );
-    await processMeetingTranscript('meeting-1');
+    await processMeetingTranscript(
+      'meeting-1',
+      Buffer.from('test'),
+      'test.mp4'
+    );
 
     expect(mockCreate).toHaveBeenCalledTimes(2);
     expect(mockCreate).toHaveBeenNthCalledWith(
@@ -134,7 +149,11 @@ describe('meeting-ai-service', () => {
     const { processMeetingTranscript } = await import(
       '../services/meeting-ai-service'
     );
-    await processMeetingTranscript('meeting-1');
+    await processMeetingTranscript(
+      'meeting-1',
+      Buffer.from('test'),
+      'test.mp4'
+    );
 
     expect(mockCreate).toHaveBeenCalledTimes(2);
     expect(mockUpdateMeeting).toHaveBeenCalledWith('meeting-1', {
@@ -161,7 +180,11 @@ describe('meeting-ai-service', () => {
     const { processMeetingTranscript } = await import(
       '../services/meeting-ai-service'
     );
-    await processMeetingTranscript('meeting-1');
+    await processMeetingTranscript(
+      'meeting-1',
+      Buffer.from('test'),
+      'test.mp4'
+    );
 
     expect(mockUpdateMeeting).toHaveBeenCalledWith('meeting-1', {
       status: 'failed',
@@ -188,7 +211,11 @@ describe('meeting-ai-service', () => {
     const { processMeetingTranscript } = await import(
       '../services/meeting-ai-service'
     );
-    await processMeetingTranscript('meeting-1');
+    await processMeetingTranscript(
+      'meeting-1',
+      Buffer.from('test'),
+      'test.mp4'
+    );
 
     expect(mockUpdateMeeting).toHaveBeenCalledWith('meeting-1', {
       status: 'failed',
@@ -215,7 +242,11 @@ describe('meeting-ai-service', () => {
     const { processMeetingTranscript } = await import(
       '../services/meeting-ai-service'
     );
-    await processMeetingTranscript('meeting-1');
+    await processMeetingTranscript(
+      'meeting-1',
+      Buffer.from('test'),
+      'test.mp4'
+    );
 
     expect(mockUpdateMeeting).toHaveBeenCalledWith('meeting-1', {
       status: 'failed',
@@ -229,56 +260,18 @@ describe('meeting-ai-service', () => {
     const { processMeetingTranscript } = await import(
       '../services/meeting-ai-service'
     );
-    await processMeetingTranscript('nonexistent');
+    await processMeetingTranscript(
+      'nonexistent',
+      Buffer.from('test'),
+      'test.mp4'
+    );
 
     expect(mockCreate).not.toHaveBeenCalled();
     expect(mockUpdateMeeting).not.toHaveBeenCalled();
   });
 
-  it('sets status to failed when transcriptionText is empty', async () => {
-    mockGetMeetingById.mockResolvedValue({
-      id: 'meeting-1',
-      transcriptOutput: {
-        transcriptionText: '',
-        segments: [],
-        durationSeconds: 0,
-        detectedLanguage: 'en'
-      },
-      status: 'processing'
-    });
-
-    const { processMeetingTranscript } = await import(
-      '../services/meeting-ai-service'
-    );
-    await processMeetingTranscript('meeting-1');
-
-    expect(mockCreate).not.toHaveBeenCalled();
-    expect(mockUpdateMeeting).toHaveBeenCalledWith('meeting-1', {
-      status: 'failed',
-      errorMessage: 'Transcript text is empty'
-    });
-  });
-
-  it('sets status to failed when transcriptOutput is null', async () => {
-    mockGetMeetingById.mockResolvedValue({
-      id: 'meeting-1',
-      transcriptOutput: null,
-      status: 'processing'
-    });
-
-    const { processMeetingTranscript } = await import(
-      '../services/meeting-ai-service'
-    );
-    await processMeetingTranscript('meeting-1');
-
-    expect(mockCreate).not.toHaveBeenCalled();
-    expect(mockUpdateMeeting).toHaveBeenCalledWith('meeting-1', {
-      status: 'failed',
-      errorMessage: 'Transcript text is empty'
-    });
-  });
-
-  it('runs Whisper when no transcriptOutput and fileBuffer provided', async () => {
+  it('runs Whisper when REPLICATE_API_KEY is set', async () => {
+    mockEnv.REPLICATE_API_KEY = 'test-replicate-key';
     mockGetMeetingById.mockResolvedValue({
       id: 'meeting-1',
       transcriptOutput: null,
@@ -335,6 +328,7 @@ describe('meeting-ai-service', () => {
   });
 
   it('sets failed status when Whisper fails and skips Haiku', async () => {
+    mockEnv.REPLICATE_API_KEY = 'test-replicate-key';
     mockGetMeetingById.mockResolvedValue({
       id: 'meeting-1',
       transcriptOutput: null,
@@ -359,52 +353,5 @@ describe('meeting-ai-service', () => {
       errorMessage: 'Replicate API error'
     });
     expect(mockCreate).not.toHaveBeenCalled();
-  });
-
-  it('skips Whisper when transcriptOutput already exists', async () => {
-    mockGetMeetingById.mockResolvedValue({
-      id: 'meeting-1',
-      transcriptOutput: {
-        transcriptionText: 'Already transcribed',
-        segments: [],
-        durationSeconds: 30,
-        detectedLanguage: 'english'
-      },
-      status: 'processing'
-    });
-
-    mockCreate
-      .mockResolvedValueOnce({
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify({
-              title: 'Test',
-              summary: 'Summary',
-              actionItems: []
-            })
-          }
-        ]
-      })
-      .mockResolvedValueOnce({
-        content: [
-          {
-            type: 'text',
-            text: JSON.stringify({ pass: true, reason: 'Valid' })
-          }
-        ]
-      });
-
-    const { processMeetingTranscript } = await import(
-      '../services/meeting-ai-service'
-    );
-    await processMeetingTranscript(
-      'meeting-1',
-      Buffer.from('audio'),
-      'test.mp4'
-    );
-
-    expect(mockTranscribeWithWhisper).not.toHaveBeenCalled();
-    expect(mockCreate).toHaveBeenCalledTimes(2);
   });
 });

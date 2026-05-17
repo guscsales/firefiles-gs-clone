@@ -1,5 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { env } from '@/env';
+import { getMockTranscription } from '@/packages/factory/meetings/mocks/get-mock-transcription';
 import {
   getMeetingById,
   updateMeeting
@@ -173,37 +174,36 @@ async function _processTranscriptionMetadata(
 
 export async function processMeetingTranscript(
   meetingId: string,
-  fileBuffer?: Buffer,
-  fileName?: string
+  fileBuffer: Buffer,
+  fileName: string
 ) {
   const meeting = await getMeetingById(meetingId);
   if (!meeting) return;
 
   let transcriptionText: string | undefined;
 
-  const existingTranscript = meeting.transcriptOutput as {
-    transcriptionText?: string;
-  } | null;
-
-  if (existingTranscript?.transcriptionText) {
-    transcriptionText = existingTranscript.transcriptionText;
-  } else if (fileBuffer && fileName) {
-    try {
+  try {
+    if (env.REPLICATE_API_KEY) {
       logger.info(`Processing transcription via Whisper - ID: ${meetingId}`);
       const whisperOutput = await transcribeWithWhisper(fileBuffer, fileName);
       await updateMeeting(meetingId, { transcriptOutput: whisperOutput });
       transcriptionText = whisperOutput.transcriptionText;
       logger.info(`Whisper transcription completed - ID: ${meetingId}`);
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Whisper transcription failed';
-      logger.error('Whisper transcription failed', error);
-      await updateMeeting(meetingId, {
-        status: 'failed',
-        errorMessage: message
-      });
-      return;
+    } else {
+      logger.info(`Using mock transcription - ID: ${meetingId}`);
+      const mockOutput = getMockTranscription();
+      await updateMeeting(meetingId, { transcriptOutput: mockOutput });
+      transcriptionText = mockOutput.transcriptionText;
     }
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'Transcription failed';
+    logger.error('Transcription failed', error);
+    await updateMeeting(meetingId, {
+      status: 'failed',
+      errorMessage: message
+    });
+    return;
   }
 
   if (!transcriptionText) {
