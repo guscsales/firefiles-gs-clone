@@ -7,7 +7,8 @@ if (process.env.USE_DOTENV) {
 
 const envSchema = z.object({
   DATABASE_URL: z.url().startsWith('postgresql://'),
-  AI_API_KEY: z.string().min(1)
+  AI_API_KEY: z.string().min(1),
+  REPLICATE_API_KEY: z.string().optional()
 });
 
 const isBuilding = process.env.NEXT_PHASE === 'phase-production-build';

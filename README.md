@@ -8,6 +8,8 @@
 - Docker
 - Bun (`npm install -g bun`)
 - An [Anthropic API key](https://console.anthropic.com/)
+- *(Optional)* A [Replicate API key](https://replicate.com/) — if `REPLICATE_API_KEY` is set, uploaded files are transcribed with OpenAI Whisper via Replicate. If absent, a mock transcription is used instead.
+- A test video file `gitlab-public-meeting.mp4` is included in the repo root for easy testing.
 
 ### Setup
 
@@ -65,10 +67,11 @@ bun lint                   # Biome linter
 - Mock transcripts are small. Even a real Whisper output for a 30-minute meeting is ~50KB of text, which is trivial for Postgres.
 - An extra Blob fetch would add latency and complexity for zero benefit at this scale.
 
-### 4. LLM: Claude Haiku 4.5 via Anthropic SDK
+### 4. LLM: Claude Haiku 4.5 via Anthropic SDK and Open AI Whisper vis Replicate
 
 - Claude Haiku 4.5 is strong at structured JSON output, which I need for action items.
 - The Anthropic TypeScript SDK is lightweight and straightforward to use.
+- Replicate makes easier to execute many types of models, so for Open AI Whisper I chose it.
 - Important to define length limits to avoid excessive token usage and potential costs.
 
 ### 5. Background AI processing with `waitUntil()`
@@ -141,4 +144,3 @@ The script `bash scripts/run-integration-tests.sh` instantiate a temporary postg
 
 - **Authentication + Multi-tenant:** Single-user demo. In production I'd use Better Auth, but adds nothing for a code review.
 - **Job queues / retry orchestration:** Background processing uses `waitUntil()` which is sufficient for this scope. A production system would add Trigger.dev or similar for retries, dead letter queues, and multi-step orchestration.
-- **Real audio transcription:** Currently uses a mock transcription. In production, this would call Whisper or a similar speech-to-text API.

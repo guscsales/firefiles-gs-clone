@@ -6,6 +6,7 @@ import {
   ALLOWED_MIME_TYPES,
   MAX_FILE_SIZE
 } from '@/app/meetings/_validators/meeting-upload';
+import { env } from '@/env';
 import { getMockTranscription } from '@/packages/factory/meetings/mocks/get-mock-transcription';
 import { processMeetingTranscript } from '@/packages/factory/meetings/services/meeting-ai-service';
 import {
@@ -87,6 +88,20 @@ export async function POST(request: Request) {
   }
 
   try {
+    const useWhisper = !!env.REPLICATE_API_KEY;
+
+    if (useWhisper) {
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
+
+      const meeting = await createMeeting({ status: 'processing' });
+
+      logger.info(`Meeting created - ID: ${meeting.id}`);
+
+      waitUntil(processMeetingTranscript(meeting.id, fileBuffer, file.name));
+
+      return NextResponse.json({ meeting }, { status: 201 });
+    }
+
     const transcriptOutput = getMockTranscription();
 
     const meeting = await createMeeting({

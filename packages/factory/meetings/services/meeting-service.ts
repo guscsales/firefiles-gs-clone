@@ -21,7 +21,7 @@ type ListMeetingsParams = {
 };
 
 type CreateMeetingParams = {
-  transcriptOutput: object;
+  transcriptOutput?: object;
   status?: 'processing' | 'ready' | 'failed';
 };
 

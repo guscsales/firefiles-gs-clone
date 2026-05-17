@@ -1,7 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/env', () => ({
-  env: { DATABASE_URL: 'postgres://test' }
+  env: {
+    DATABASE_URL: 'postgres://test',
+    AI_API_KEY: 'test-key',
+    REPLICATE_API_KEY: undefined
+  }
 }));
 
 vi.mock('@/packages/factory/meetings/services/meeting-service', () => ({

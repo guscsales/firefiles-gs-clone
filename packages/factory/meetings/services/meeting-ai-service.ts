@@ -4,6 +4,7 @@ import {
   getMeetingById,
   updateMeeting
 } from '@/packages/factory/meetings/services/meeting-service';
+import { transcribeWithWhisper } from '@/packages/factory/meetings/services/meeting-transcription-service';
 import { createLoggerClient } from '@/packages/plugins/logger/logger';
 
 const logger = createLoggerClient('meeting-ai-service');
@@ -170,14 +171,40 @@ async function _processTranscriptionMetadata(
   logger.info(`Meeting metadata process completed - ID: ${meetingId}`);
 }
 
-export async function processMeetingTranscript(meetingId: string) {
+export async function processMeetingTranscript(
+  meetingId: string,
+  fileBuffer?: Buffer,
+  fileName?: string
+) {
   const meeting = await getMeetingById(meetingId);
   if (!meeting) return;
 
-  const transcriptOutput = meeting.transcriptOutput as {
+  let transcriptionText: string | undefined;
+
+  const existingTranscript = meeting.transcriptOutput as {
     transcriptionText?: string;
   } | null;
-  const transcriptionText = transcriptOutput?.transcriptionText;
+
+  if (existingTranscript?.transcriptionText) {
+    transcriptionText = existingTranscript.transcriptionText;
+  } else if (fileBuffer && fileName) {
+    try {
+      logger.info(`Processing transcription via Whisper - ID: ${meetingId}`);
+      const whisperOutput = await transcribeWithWhisper(fileBuffer, fileName);
+      await updateMeeting(meetingId, { transcriptOutput: whisperOutput });
+      transcriptionText = whisperOutput.transcriptionText;
+      logger.info(`Whisper transcription completed - ID: ${meetingId}`);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Whisper transcription failed';
+      logger.error('Whisper transcription failed', error);
+      await updateMeeting(meetingId, {
+        status: 'failed',
+        errorMessage: message
+      });
+      return;
+    }
+  }
 
   if (!transcriptionText) {
     await updateMeeting(meetingId, {
