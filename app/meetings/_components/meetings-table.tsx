@@ -23,6 +23,9 @@ export function MeetingsTable() {
       sorting={sorting}
       onSortingChange={onSortingChange}
       onPageChange={onPageChange}
+      rowLink={(row) =>
+        row.status === 'ready' ? `/meetings/${row.id}` : undefined
+      }
       isLoading={isLoading}
       error={error}
       emptyTitle="Upload a meeting to get started"
