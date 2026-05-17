@@ -1,3 +1,4 @@
+import { waitUntil } from '@vercel/functions';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import {
@@ -6,6 +7,7 @@ import {
   MAX_FILE_SIZE
 } from '@/app/meetings/_validators/meeting-upload';
 import { getMockTranscription } from '@/packages/factory/meetings/mocks/get-mock-transcription';
+import { processMeetingTranscript } from '@/packages/factory/meetings/services/meeting-ai-service';
 import {
   createMeeting,
   listMeetings
@@ -91,6 +93,10 @@ export async function POST(request: Request) {
       transcriptOutput,
       status: 'processing'
     });
+
+    logger.info(`Meeting created - ID: ${meeting.id}`);
+
+    waitUntil(processMeetingTranscript(meeting.id));
 
     return NextResponse.json({ meeting }, { status: 201 });
   } catch (error) {

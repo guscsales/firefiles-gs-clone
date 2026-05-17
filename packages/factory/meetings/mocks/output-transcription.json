@@ -5,7 +5,7 @@
   "error": null,
   "id": "4bzv3trbxdeyon73ve6itzvycq",
   "input": {
-    "audio": "https://replicate.delivery/mgxm/e5159b1b-508a-4be4-b892-e1eb47850bdc/OSR_uk_000_0050_8k.wav",
+    "audio": "https://example.com/meeting-recording.wav",
     "model": "large-v3",
     "translate": false,
     "temperature": 0,
@@ -17,93 +17,160 @@
     "compression_ratio_threshold": 2.4,
     "temperature_increment_on_fallback": 0.2
   },
-  "logs": "Transcribe with large-v3 model.\nDetected language: English\n  0%|          | 0/5241 [00:00<?, ?frames/s]\n 35%|███▌      | 1860/5241 [00:03<00:06, 522.23frames/s]\n 93%|█████████▎| 4860/5241 [00:08<00:00, 583.46frames/s]\n100%|██████████| 5241/5241 [00:10<00:00, 479.51frames/s]\n100%|██████████| 5241/5241 [00:10<00:00, 506.10frames/s]",
+  "logs": "Transcribe with large-v3 model.\nDetected language: English\n100%|██████████| 25000/25000 [00:45<00:00, 555.00frames/s]",
   "metrics": {
-    "predict_time": 16.57265,
-    "total_time": 83.650233
+    "predict_time": 45.12,
+    "total_time": 52.34
   },
   "output": {
     "segments": [
       {
         "id": 0,
-        "end": 18.6,
+        "end": 12.5,
         "seek": 0,
-        "text": " the little tales they tell are false the door was barred locked and bolted as well ripe pears are fit for a queen's table a big wet stain was on the round carpet",
+        "text": " Alright everyone, thanks for joining the sprint planning meeting. Let's start by reviewing what we accomplished last sprint.",
         "start": 0,
-        "tokens": [
-          50365, 264, 707, 27254, 436, 980, 366, 7908, 264, 2853, 390, 2159,
-          986, 9376, 293, 13436, 292, 382, 731, 31421, 520, 685, 366, 3318, 337,
-          257, 12206, 311, 3199, 257, 955, 6630, 16441, 390, 322, 264, 3098,
-          18119, 51295
-        ],
-        "avg_logprob": -0.060722851171726135,
+        "tokens": [50365, 1033, 2681, 1399, 11, 6717, 337, 11029, 264],
+        "avg_logprob": -0.05,
         "temperature": 0,
-        "no_speech_prob": 0.05907342955470085,
-        "compression_ratio": 1.412280701754386
+        "no_speech_prob": 0.02,
+        "compression_ratio": 1.35
       },
       {
         "id": 1,
-        "end": 31.840000000000003,
-        "seek": 1860,
-        "text": " the kite dipped and swayed but stayed aloft the pleasant hours fly by much too soon the room was crowded with a mild wab",
-        "start": 18.6,
-        "tokens": [
-          50365, 264, 38867, 45162, 293, 27555, 292, 457, 9181, 419, 6750, 264,
-          16232, 2496, 3603, 538, 709, 886, 2321, 264, 1808, 390, 21634, 365,
-          257, 15154, 261, 455, 51027
-        ],
-        "avg_logprob": -0.1184891973223005,
+        "end": 28.3,
+        "seek": 1250,
+        "text": " So last sprint we closed twelve tickets. The authentication module is fully done, and the user dashboard is about eighty percent complete. Sarah, can you give us a quick update on the dashboard?",
+        "start": 12.5,
+        "tokens": [50365, 407, 1036, 18091, 321, 5765, 15631, 10620],
+        "avg_logprob": -0.08,
         "temperature": 0,
-        "no_speech_prob": 0.000253104604780674,
-        "compression_ratio": 1.696969696969697
+        "no_speech_prob": 0.01,
+        "compression_ratio": 1.42
       },
       {
         "id": 2,
-        "end": 45.2,
-        "seek": 1860,
-        "text": " the room was crowded with a wild mob this strong arm shall shield your honour she blushed when he gave her a white orchid",
-        "start": 31.840000000000003,
-        "tokens": [
-          51027, 264, 1808, 390, 21634, 365, 257, 4868, 4298, 341, 2068, 3726,
-          4393, 10257, 428, 20631, 750, 25218, 292, 562, 415, 2729, 720, 257,
-          2418, 34850, 327, 51695
-        ],
-        "avg_logprob": -0.1184891973223005,
+        "end": 45.8,
+        "seek": 2830,
+        "text": " Sure. The main dashboard layout is done. I still need to finish the analytics charts and the export to PDF feature. I think I can wrap up the charts by Wednesday and the PDF export by end of sprint.",
+        "start": 28.3,
+        "tokens": [50365, 8691, 13, 440, 2135, 14110, 12461, 307, 1096],
+        "avg_logprob": -0.06,
         "temperature": 0,
-        "no_speech_prob": 0.000253104604780674,
-        "compression_ratio": 1.696969696969697
+        "no_speech_prob": 0.015,
+        "compression_ratio": 1.38
       },
       {
         "id": 3,
-        "end": 48.6,
-        "seek": 1860,
-        "text": " the beetle droned in the hot june sun",
-        "start": 45.2,
-        "tokens": [
-          51695, 264, 49735, 1224, 19009, 294, 264, 2368, 361, 2613, 3295, 51865
-        ],
-        "avg_logprob": -0.1184891973223005,
+        "end": 62.1,
+        "seek": 4580,
+        "text": " Great. Now for this sprint, we have three main priorities. First, we need to finish the dashboard. Second, the API integration with the payment provider needs to start. And third, we should address the performance issues on the search page.",
+        "start": 45.8,
+        "tokens": [50365, 2495, 13, 823, 337, 341, 18091, 11, 321],
+        "avg_logprob": -0.07,
         "temperature": 0,
-        "no_speech_prob": 0.000253104604780674,
-        "compression_ratio": 1.696969696969697
+        "no_speech_prob": 0.02,
+        "compression_ratio": 1.45
       },
       {
         "id": 4,
-        "end": 52.38,
-        "seek": 4860,
-        "text": " the beetle droned in the hot june sun",
-        "start": 48.6,
-        "tokens": [
-          50365, 264, 49735, 1224, 19009, 294, 264, 2368, 361, 2613, 3295, 50554
-        ],
-        "avg_logprob": -0.30115177081181455,
-        "temperature": 0.2,
-        "no_speech_prob": 0.292143315076828,
-        "compression_ratio": 0.8409090909090909
+        "end": 78.5,
+        "seek": 6210,
+        "text": " Mike, you'll take the payment integration, right? We need to support Stripe and PayPal. The Stripe SDK documentation is already bookmarked in our shared notes. Can you estimate how many story points that would be?",
+        "start": 62.1,
+        "tokens": [50365, 9209, 11, 291, 603, 747, 264, 10224, 13465],
+        "avg_logprob": -0.09,
+        "temperature": 0,
+        "no_speech_prob": 0.01,
+        "compression_ratio": 1.4
+      },
+      {
+        "id": 5,
+        "end": 95.2,
+        "seek": 7850,
+        "text": " I'd say about eight points for Stripe and five for PayPal since we can reuse most of the payment flow. I'll start with Stripe on Monday and should have a working prototype by Thursday.",
+        "start": 78.5,
+        "tokens": [50365, 286, 1116, 584, 466, 3180, 2793, 337, 48906],
+        "avg_logprob": -0.06,
+        "temperature": 0,
+        "no_speech_prob": 0.02,
+        "compression_ratio": 1.36
+      },
+      {
+        "id": 6,
+        "end": 115.0,
+        "seek": 9520,
+        "text": " Perfect. And for the search performance issue, I ran some profiling yesterday. The main bottleneck is the database query. We're doing a full table scan instead of using the index. I'll create a ticket to add the proper index and optimize the query. Should be a quick fix, maybe two points.",
+        "start": 95.2,
+        "tokens": [50365, 8728, 13, 400, 337, 264, 3164, 5765, 2734],
+        "avg_logprob": -0.07,
+        "temperature": 0,
+        "no_speech_prob": 0.01,
+        "compression_ratio": 1.48
+      },
+      {
+        "id": 7,
+        "end": 132.4,
+        "seek": 11500,
+        "text": " Good catch. Alright, let's also talk about the deployment pipeline. We had two failed deployments last week because of flaky tests. James, can you look into stabilizing the CI pipeline this sprint?",
+        "start": 115.0,
+        "tokens": [50365, 2205, 3745, 13, 1033, 2681, 11, 718, 311],
+        "avg_logprob": -0.08,
+        "temperature": 0,
+        "no_speech_prob": 0.015,
+        "compression_ratio": 1.41
+      },
+      {
+        "id": 8,
+        "end": 148.6,
+        "seek": 13240,
+        "text": " Yeah, I already identified the three flaky tests. Two of them are timing issues in the integration tests, and one is a race condition in the WebSocket test. I'll fix those first thing Monday morning.",
+        "start": 132.4,
+        "tokens": [50365, 865, 11, 286, 1217, 8219, 264, 1045, 46571],
+        "avg_logprob": -0.05,
+        "temperature": 0,
+        "no_speech_prob": 0.02,
+        "compression_ratio": 1.39
+      },
+      {
+        "id": 9,
+        "end": 165.0,
+        "seek": 14860,
+        "text": " Excellent. One more thing, the product team wants us to add a notification system. I think we should plan that for next sprint. Sarah, could you do some research on notification services like Firebase Cloud Messaging or Amazon SNS and present your findings next Friday?",
+        "start": 148.6,
+        "tokens": [50365, 31998, 13, 1836, 544, 551, 11, 264, 1674],
+        "avg_logprob": -0.07,
+        "temperature": 0,
+        "no_speech_prob": 0.01,
+        "compression_ratio": 1.44
+      },
+      {
+        "id": 10,
+        "end": 175.3,
+        "seek": 16500,
+        "text": " Absolutely, I'll have a comparison document ready by Friday. I'll include cost estimates and integration complexity for each option.",
+        "start": 165.0,
+        "tokens": [50365, 37620, 11, 286, 603, 362, 257, 9660, 4166],
+        "avg_logprob": -0.04,
+        "temperature": 0,
+        "no_speech_prob": 0.02,
+        "compression_ratio": 1.32
+      },
+      {
+        "id": 11,
+        "end": 190.0,
+        "seek": 17530,
+        "text": " Great. So to summarize, this sprint we're focusing on finishing the dashboard, starting payment integration with Stripe and PayPal, fixing the search performance, and stabilizing the CI pipeline. Any questions? Alright, let's get to work. Thanks everyone.",
+        "start": 175.3,
+        "tokens": [50365, 2495, 13, 407, 281, 20858, 11, 341, 18091],
+        "avg_logprob": -0.06,
+        "temperature": 0,
+        "no_speech_prob": 0.01,
+        "compression_ratio": 1.46
       }
     ],
     "translation": null,
-    "transcription": " the little tales they tell are false the door was barred locked and bolted as well ripe pears are fit for a queen's table a big wet stain was on the round carpet the kite dipped and swayed but stayed aloft the pleasant hours fly by much too soon the room was crowded with a mild wab the room was crowded with a wild mob this strong arm shall shield your honour she blushed when he gave her a white orchid the beetle droned in the hot june sun the beetle droned in the hot june sun",
+    "transcription": " Alright everyone, thanks for joining the sprint planning meeting. Let's start by reviewing what we accomplished last sprint. So last sprint we closed twelve tickets. The authentication module is fully done, and the user dashboard is about eighty percent complete. Sarah, can you give us a quick update on the dashboard? Sure. The main dashboard layout is done. I still need to finish the analytics charts and the export to PDF feature. I think I can wrap up the charts by Wednesday and the PDF export by end of sprint. Great. Now for this sprint, we have three main priorities. First, we need to finish the dashboard. Second, the API integration with the payment provider needs to start. And third, we should address the performance issues on the search page. Mike, you'll take the payment integration, right? We need to support Stripe and PayPal. The Stripe SDK documentation is already bookmarked in our shared notes. Can you estimate how many story points that would be? I'd say about eight points for Stripe and five for PayPal since we can reuse most of the payment flow. I'll start with Stripe on Monday and should have a working prototype by Thursday. Perfect. And for the search performance issue, I ran some profiling yesterday. The main bottleneck is the database query. We're doing a full table scan instead of using the index. I'll create a ticket to add the proper index and optimize the query. Should be a quick fix, maybe two points. Good catch. Alright, let's also talk about the deployment pipeline. We had two failed deployments last week because of flaky tests. James, can you look into stabilizing the CI pipeline this sprint? Yeah, I already identified the three flaky tests. Two of them are timing issues in the integration tests, and one is a race condition in the WebSocket test. I'll fix those first thing Monday morning. Excellent. One more thing, the product team wants us to add a notification system. I think we should plan that for next sprint. Sarah, could you do some research on notification services like Firebase Cloud Messaging or Amazon SNS and present your findings next Friday? Absolutely, I'll have a comparison document ready by Friday. I'll include cost estimates and integration complexity for each option. Great. So to summarize, this sprint we're focusing on finishing the dashboard, starting payment integration with Stripe and PayPal, fixing the search performance, and stabilizing the CI pipeline. Any questions? Alright, let's get to work. Thanks everyone.",
     "detected_language": "english"
   },
   "started_at": "2023-11-08T22:19:46.444153Z",

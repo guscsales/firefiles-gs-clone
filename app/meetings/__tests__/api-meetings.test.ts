@@ -12,6 +12,7 @@ vi.mock('@/packages/factory/meetings/services/meeting-service', () => ({
     transcriptOutput: {},
     createdAt: new Date().toISOString()
   }),
+  getMeetingById: vi.fn().mockResolvedValue(null),
   listMeetings: vi.fn().mockResolvedValue({
     data: [
       {
@@ -23,6 +24,14 @@ vi.mock('@/packages/factory/meetings/services/meeting-service', () => ({
     ],
     pagination: { page: 1, pageSize: 10, total: 1, totalPages: 1 }
   })
+}));
+
+vi.mock('@/packages/factory/meetings/services/meeting-ai-service', () => ({
+  processMeetingTranscript: vi.fn().mockResolvedValue(undefined)
+}));
+
+vi.mock('@vercel/functions', () => ({
+  waitUntil: vi.fn()
 }));
 
 vi.mock('@/packages/factory/meetings/mocks/get-mock-transcription', () => ({

@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { DataTable } from '@/packages/ui/app-components/data-table';
 import {
@@ -18,6 +19,7 @@ const baseMeeting: MeetingRow = {
   id: 'test-id',
   title: 'Weekly Standup',
   status: 'processing',
+  errorMessage: null,
   createdAt: '2026-05-16T12:00:00Z'
 };
 
@@ -92,10 +94,61 @@ describe('meetingsColumns', () => {
 
       expect(screen.getByText('Meeting A')).toBeInTheDocument();
       expect(screen.getByText('Meeting B')).toBeInTheDocument();
-      expect(screen.getByText('Meeting C')).toBeInTheDocument();
+      expect(screen.getByText('Failed to process meeting')).toBeInTheDocument();
       expect(screen.getByText('Processing')).toBeInTheDocument();
       expect(screen.getByText('Ready')).toBeInTheDocument();
       expect(screen.getByText('Failed')).toBeInTheDocument();
+    });
+
+    it('shows "Failed to process meeting" title for failed rows', () => {
+      _renderTable([
+        { ...baseMeeting, status: 'failed', errorMessage: 'API error' }
+      ]);
+      expect(screen.getByText('Failed to process meeting')).toBeInTheDocument();
+      expect(screen.queryByText('Weekly Standup')).not.toBeInTheDocument();
+    });
+
+    it('renders error info icon for failed rows with errorMessage', () => {
+      _renderTable([
+        { ...baseMeeting, status: 'failed', errorMessage: 'API error' }
+      ]);
+      const icon = document.querySelector('svg.lucide-circle-alert');
+      expect(icon).toBeInTheDocument();
+    });
+
+    it('does not render error icon for failed rows without errorMessage', () => {
+      _renderTable([{ ...baseMeeting, status: 'failed', errorMessage: null }]);
+      const icon = document.querySelector('svg.lucide-circle-alert');
+      expect(icon).not.toBeInTheDocument();
+    });
+
+    it('does not render error icon for non-failed rows', () => {
+      _renderTable([{ ...baseMeeting, status: 'ready' }]);
+      const icon = document.querySelector('svg.lucide-circle-alert');
+      expect(icon).not.toBeInTheDocument();
+    });
+
+    it('shows error message tooltip on hover over info icon', async () => {
+      const user = userEvent.setup();
+      _renderTable([
+        {
+          ...baseMeeting,
+          status: 'failed',
+          errorMessage: 'Quality check failed: not a real meeting'
+        }
+      ]);
+
+      const icon = document.querySelector('svg.lucide-circle-alert') as Element;
+      expect(icon).toBeInTheDocument();
+
+      await user.hover(icon);
+
+      await waitFor(() => {
+        const matches = screen.getAllByText(
+          'Quality check failed: not a real meeting'
+        );
+        expect(matches.length).toBeGreaterThanOrEqual(1);
+      });
     });
 
     it('shows empty state when no data', () => {

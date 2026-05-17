@@ -35,4 +35,5 @@ DATABASE_URL="$DATABASE_URL" bun db:push
 
 # Run integration tests
 DATABASE_URL="$DATABASE_URL" \
+  AI_API_KEY="test-key-for-integration" \
   vitest run --config vitest.integration.config.ts
